@@ -4,14 +4,25 @@ on:
   pull_request:
     branches:
       - main
+      - dev
 
 jobs:
   check-source-branch:
     runs-on: ubuntu-latest
     steps:
-      - name: Check if source is development branch
-        if: github.head_ref != 'dev'
+      - name: Validate Branch Work
         run: |
-          echo "ERROR: You can only merge into 'main' from the 'dev' branch."
-          echo "Your current source branch is: ${{ github.head_ref }}"
-          exit 1
+          TARGET="${{ github.base_ref }}"
+          SOURCE="${{ github.head_ref }}"
+
+          echo "Target branch: $TARGET"
+          echo "Source branch: $SOURCE"
+
+          # Rule: If merging into 'main', source MUST be 'dev'
+          if [[ "$TARGET" == "main" && "$SOURCE" != "dev" ]]; then
+            echo "ERROR: You can only merge into 'main' from the 'dev' branch."
+            exit 1
+          fi
+
+          # If we are merging into 'dev' or the rule above didn't trigger
+          echo "Check passed: This is a valid merge path."
