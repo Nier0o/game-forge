@@ -1,0 +1,9 @@
+node_modules/
+.env
+*.log
+.DS_Store
+
+# GODOT specific
+.import/
+export_presets.cfg
+builds/
