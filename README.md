@@ -17,18 +17,21 @@ game-forge/
 ## Architecture & Services
 
 ### 1. Frontend
+
 - **Path**: `/frontend`
 - **Tech Stack**: React, Vite, Tailwind CSS
 - **Port**: 3000 (Docker), 5173 (Local)
 - **Role**: User interface for prompting and playing games.
 
 ### 2. Backend
+
 - **Path**: `/backend`
 - **Tech Stack**: Node.js, Express, Puppeteer
 - **Port**: 5000
 - **Role**: Orchestrates requests, manages database, and handles AI/Godot pipelines.
 
 ### 3. Database
+
 - **Type**: MongoDB
 - **Port**: 27017
 - **Role**: Stores user profiles, prompts, and game metadata. Data is persisted in a Docker volume.
@@ -47,6 +50,7 @@ docker-compose -f docker/docker-compose.yml up --build
 ## Development Workflow
 
 ### 1. Backend & Database
+
 These services are best run via Docker to ensure environment consistency.
 
 ```bash
@@ -54,19 +58,20 @@ docker-compose -f docker/docker-compose.yml up --build
 ```
 
 ### 2. Frontend (Local Development)
+
 For faster iteration with Hot Module Replacement (HMR), run the frontend locally.
 
 1. Ensure Backend is running (via Docker).
 2. Create a `.env` file in the `frontend` folder:
-   ```env
-   VITE_API_URL=http://localhost:5000
-   ```
+    ```env
+    VITE_API_URL=http://localhost:5000
+    ```
 3. Run the development server:
-   ```bash
-   cd frontend
-   npm install
-   npm start
-   ```
+    ```bash
+    cd frontend
+    npm install
+    npm start
+    ```
 4. Access at http://localhost:5173
 
 ## Current Progress

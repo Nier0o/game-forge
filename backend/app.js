@@ -34,11 +34,11 @@ app.use(xss());
 // app.use(express.static(`${__dirname}/public`));
 
 app.get('/api/health', (req, res) => {
-  res.status(200).json({ status: 'success', message: 'Backend is reachable!' });
+    res.status(200).json({ status: 'success', message: 'Backend is reachable!' });
 });
 
 app.get('/api/hello', (req, res) => {
-  res.status(200).json({ message: 'Hello from GameForge Backend!' });
+    res.status(200).json({ message: 'Hello from GameForge Backend!' });
 });
 
 app.all('*', (req, res, next) => {
