@@ -8,8 +8,11 @@ import xss from 'xss-clean';
 import AppError from './utils/appError.js';
 import errorController from './controllers/errorController.js';
 const app = express();
+/////////////// 1) MIDDLEWARES /////////////////////////
+// Set security HTTP headers
 app.use(helmet());
 
+// Development logging
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
