@@ -24,18 +24,18 @@ services:
 
   # --- FUTURE SERVICES PLACEHOLDERS ---
 
-  # frontend:
-  #   image: gameforge-frontend
-  #   build:
-  #     context: ../frontend
-  #     dockerfile: ../docker/frontend/Dockerfile
-  #   ports:
-  #     - "3000:3000"
-  #   environment:
-  #     - VITE_API_URL=http://backend:5000
-  #   volumes:
-  #     - ../frontend:/app
-  #     - /app/node_modules
+  frontend:
+    image: gameforge-frontend
+    build:
+      context: ../frontend
+      dockerfile: ../docker/frontend/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_API_URL=http://backend:5000
+    volumes:
+      - ../frontend:/app
+      - /app/node_modules
 
   # ai-engine:
   #   image: gameforge-ai
