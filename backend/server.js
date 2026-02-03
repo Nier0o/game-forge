@@ -14,7 +14,7 @@ process.on('uncaughtException', (err) => {
 });
 
 dotenv.config({ path: './config.env' });
-const app = require('./app');
+import app from './app.js';
 
 const DB = process.env.DATABASE_LOCAL;
 mongoose

@@ -17,7 +17,6 @@ if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
 
-// Limit requests from same API
 const limiter = rateLimit({
     max: 100,
     windowMs: 60 * 60 * 1000,
@@ -25,26 +24,27 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
-// Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
 
-// Data sanitization against NoSQL query injection
 app.use(mongoSanitize());
 
-// Data sanitization against XSS
 app.use(xss());
 
 // Serving static files
-app.use(express.static(`${__dirname}/public`));
+// app.use(express.static(`${__dirname}/public`));
 
-// Mounting routers
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'success', message: 'Backend is reachable!' });
+});
 
-// Handle unhandled routes
+app.get('/api/hello', (req, res) => {
+  res.status(200).json({ message: 'Hello from GameForge Backend!' });
+});
+
 app.all('*', (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404)); // Middleware: handles undefined routes
 });
 
-// Global error handling middleware
 app.use(errorController);
 
 export default app;
