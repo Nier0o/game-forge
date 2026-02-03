@@ -22,5 +22,38 @@ services:
     volumes:
       - mongo-data:/data/db
 
+  # --- FUTURE SERVICES PLACEHOLDERS ---
+
+  # frontend:
+  #   image: gameforge-frontend
+  #   build:
+  #     context: ../frontend
+  #     dockerfile: ../docker/frontend/Dockerfile
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - VITE_API_URL=http://backend:5000
+  #   volumes:
+  #     - ../frontend:/app
+  #     - /app/node_modules
+
+  # ai-engine:
+  #   image: gameforge-ai
+  #   build:
+  #     context: ../mcp-server # or ../ai
+  #     dockerfile: ../docker/ai/Dockerfile
+  #   ports:
+  #     - "8000:8000"
+  #   volumes:
+  #     - ../mcp-server:/app
+
+  # godot:
+  #   image: gameforge-godot
+  #   build:
+  #     context: ../godot
+  #     dockerfile: ../docker/godot/Dockerfile
+  #   volumes:
+  #     - ../godot:/app
+
 volumes:
   mongo-data:
