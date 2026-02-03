@@ -1,0 +1,26 @@
+services:
+  backend:
+    image: gameforge-backend
+    build:
+      context: ../backend
+      dockerfile: ../docker/backend/Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_LOCAL=mongodb://mongo:27017/gameforge
+      - NODE_ENV=development
+    depends_on:
+      - mongo
+    volumes:
+      - ../backend:/app
+      - /app/node_modules
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
