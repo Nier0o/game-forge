@@ -1,55 +1,59 @@
 services:
-    backend:
-        image: ghcr.io/game-forge-studio/game-forge-backend:latest
-        ports:
-            - '5000:5000'
-        env_file:
-            - ./config.env
-        environment:
-            - DATABASE_LOCAL=mongodb://mongo:27017/gameforge
-            - NODE_ENV=development
-        depends_on:
-            - mongo
+  backend:
+    image: gameforge-backend
+    build:
+      context: ../backend
+      dockerfile: ../docker/backend/Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_LOCAL=mongodb://mongo:27017/gameforge
+      - NODE_ENV=development
+    depends_on:
+      - mongo
+    volumes:
+      - ../backend:/app
+      - /app/node_modules
 
-    mongo:
-        image: mongo:latest
-        ports:
-            - '27017:27017'
-        volumes:
-            - mongo-data:/data/db
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
 
-    # --- FUTURE SERVICES PLACEHOLDERS ---
+  # --- FUTURE SERVICES PLACEHOLDERS ---
 
-    frontend:
-        image: gameforge-frontend
-        build:
-            context: ./frontend
-            dockerfile: Dockerfile
-        ports:
-            - '3000:3000'
-        environment:
-            - VITE_API_URL=http://backend:5000
-        volumes:
-            - ./frontend:/app
-            - /app/node_modules
+  frontend:
+    image: gameforge-frontend
+    build:
+      context: ../frontend
+      dockerfile: ../docker/frontend/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_API_URL=http://backend:5000
+    volumes:
+      - ../frontend:/app
+      - /app/node_modules
 
-    # ai-engine:
-    #   image: gameforge-ai
-    #   build:
-    #     context: ../mcp-server # or ../ai
-    #     dockerfile: ../docker/ai/Dockerfile
-    #   ports:
-    #     - "8000:8000"
-    #   volumes:
-    #     - ../mcp-server:/app
+  # ai-engine:
+  #   image: gameforge-ai
+  #   build:
+  #     context: ../mcp-server # or ../ai
+  #     dockerfile: ../docker/ai/Dockerfile
+  #   ports:
+  #     - "8000:8000"
+  #   volumes:
+  #     - ../mcp-server:/app
 
-    # godot:
-    #   image: gameforge-godot
-    #   build:
-    #     context: ../godot
-    #     dockerfile: ../docker/godot/Dockerfile
-    #   volumes:
-    #     - ../godot:/app
+  # godot:
+  #   image: gameforge-godot
+  #   build:
+  #     context: ../godot
+  #     dockerfile: ../docker/godot/Dockerfile
+  #   volumes:
+  #     - ../godot:/app
 
 volumes:
-    mongo-data:
+  mongo-data:
