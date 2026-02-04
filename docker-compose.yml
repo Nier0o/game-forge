@@ -3,6 +3,8 @@ services:
         image: ghcr.io/game-forge-studio/game-forge-backend:latest
         ports:
             - '5000:5000'
+        env_file:
+            - ./config.env
         environment:
             - DATABASE_LOCAL=mongodb://mongo:27017/gameforge
             - NODE_ENV=development
@@ -21,14 +23,14 @@ services:
     frontend:
         image: gameforge-frontend
         build:
-            context: ../frontend
-            dockerfile: ../docker/frontend/Dockerfile
+            context: ./frontend
+            dockerfile: Dockerfile
         ports:
             - '3000:3000'
         environment:
             - VITE_API_URL=http://backend:5000
         volumes:
-            - ../frontend:/app
+            - ./frontend:/app
             - /app/node_modules
 
     # ai-engine:
