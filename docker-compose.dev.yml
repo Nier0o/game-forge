@@ -1,0 +1,39 @@
+services:
+    mongo:
+        image: mongo:latest
+        ports:
+            - '27017:27017'
+        container_name: game-forge-mongo
+        volumes:
+            - mongo-dev-data:/data/db
+    frontend:
+        build:
+            context: ../game-forge-frontend
+            dockerfile: Dockerfile.dev
+        volumes:
+            - ../game-forge-frontend:/app
+            - /app/node_modules
+        ports:
+            - '3000:3000'
+        environment:
+            - VITE_API_URL=http://backend:5000
+            - CHOKIDAR_USEPOLLING=true
+        depends_on:
+            - backend
+
+    backend:
+        build:
+            context: ../game-forge-backend
+            dockerfile: Dockerfile.dev
+        volumes:
+            - ../game-forge-backend:/app
+            - /app/node_modules
+        ports:
+            - '5000:5000'
+        environment:
+            - DATABASE_LOCAL=mongodb://host.docker.internal:27017/gameforge
+            - CHOKIDAR_USEPOLLING=true
+        depends_on:
+            - mongo
+volumes:
+    mongo-dev-data:

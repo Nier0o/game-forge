@@ -18,7 +18,7 @@ services:
             - '27017:27017'
         container_name: game-forge-mongo
         volumes:
-            - mongo-data:/data/db
+            - mongo-prod-data:/data/db
 
     frontend:
         image: ghcr.io/game-forge-studio/game-forge-frontend:latest
@@ -52,4 +52,4 @@ services:
     #     - ../godot:/app
 
 volumes:
-    mongo-data:
+    mongo-prod-data:
