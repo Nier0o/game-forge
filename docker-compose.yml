@@ -4,7 +4,7 @@ services:
         ports:
             - '5000:5000'
         env_file:
-            - ./.env
+            - ../game-forge-backend/.env
         container_name: game-forge-backend
         environment:
             - DATABASE_LOCAL=mongodb://mongo:27017/gameforge
@@ -25,7 +25,7 @@ services:
         ports:
             - '3000:3000'
         env_file:
-            - ./.env
+            - ../game-forge-frontend/.env
         container_name: game-forge-frontend
         environment:
             - VITE_API_URL=http://backend:5000
