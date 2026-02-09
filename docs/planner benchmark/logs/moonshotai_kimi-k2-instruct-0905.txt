@@ -1,0 +1,21 @@
+================================================================================
+MODEL: moonshotai/kimi-k2-instruct-0905
+RAW OUTPUT:
+{"genre":"top-down 2D stealth-action","player":"lone explorer with a simple sword","level":"single dimly-lit indoor map","win_condition":"reach the exit door","theme":"quiet-dark pixel-art atmosphere"}
+--------------------------------------------------------------------------------
+PURE JSON (+2)
+
+EXTRACTED JSON:
+{
+  "genre": "top-down 2D stealth-action",
+  "player": "lone explorer with a simple sword",
+  "level": "single dimly-lit indoor map",
+  "win_condition": "reach the exit door",
+  "theme": "quiet-dark pixel-art atmosphere"
+}
+SCHEMA PASS (+2)
+REASONING SCORE: 8
+
+FINAL RAW SCORE: 12
+LATENCY: 0.481s
+================================================================================

@@ -1,0 +1,30 @@
+================================================================================
+MODEL: openai/gpt-oss-20b
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+
+**Audio Generation Prompt**
+
+Create a looping ambient track for a horror game that feels empty, quiet, and unsettling.  
+- **Mood**: Empty, lonely, uncomfortable quiet; no epic, heroic, or powerful vibes.  
+- **Dynamics**: Very low volume overall; when tension rises, the sound becomes slightly heavier but never loud or dramatic.  
+- **Instrumentation & Textures**:  
+  - Low, sustained drone (subtle synth or filtered bass).  
+  - Sparse, distant wind or rustling leaves.  
+  - Footsteps on stone and metal surfaces (recorded or synthesized).  
+  - Distant breathing sounds, slow dragging noises, occasional chain clinks.  
+  - No magical, spell, laser, or sci‑fi sounds.  
+- **Looping**: Seamless, unnoticeable loop.  
+- **Enemy cues**: Subtle breathing, dragging, chains—no screams or jump‑scare sounds.  
+- **Overall**: Minimalistic, atmospheric, and heavy in texture when danger is near, but never loud.  
+
+Use these elements to generate a continuous, low‑volume ambient track that enhances the feeling of isolation.
+
+--------------------------------------------------------------------------------
+Instruction Following Score: 0/2
+Audio Coverage Score: 3/4
+Generation Quality Score: 6/6
+RAW FINAL SCORE: 9/12
+LATENCY: 0.807 seconds
+================================================================================

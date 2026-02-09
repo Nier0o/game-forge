@@ -1,0 +1,39 @@
+================================================================================
+MODEL: qwen/qwen3-32b
+RAW OUTPUT:
+<think>
+Okay, let's tackle this. The user wants a game idea extracted from their message. First, I need to parse through their informal and noisy input.
+
+They mentioned no guns, which is clear. Magic is out, but swords are okay. So the genre should be action or exploration without magic or guns. Maybe "Dark Survival Exploration" as a genre since they want survival elements and avoiding enemies.
+
+Player mechanics: They want the player to walk around, explore, avoid or fight enemies in close combat. So the player's role is an explorer in a dark environment. The level structure is single map, not open world. Maybe a "Single Static Environment" with limited areas.
+
+Win condition needs to be clear, like surviving until dawn or escaping. They mentioned reaching an exit door or stairs, so "Survive until dawn or reach the exit" makes sense. The theme is dark and quiet, not horror, more atmospheric. Pixel art is preferred but not the focus. So theme is "Atmospheric Survival in a Quiet, Dark World."
+
+Check the schema: genre, player, level, win_condition, theme. All required fields are covered. Make sure no extra features are added. Keep it simple as per the user's request. Avoid any contradictions, like multiple maps. Stick to one level. Yeah, that should fit.
+</think>
+
+{
+  "genre": "Dark Survival Exploration",
+  "player": "Explorer navigating a quiet, dangerous environment",
+  "level": "Single static environment with limited areas",
+  "win_condition": "Survive until dawn or reach the exit",
+  "theme": "Atmospheric Survival in a Quiet, Dark World"
+}
+--------------------------------------------------------------------------------
+RECOVERABLE JSON (+1)
+
+EXTRACTED JSON:
+{
+  "genre": "Dark Survival Exploration",
+  "player": "Explorer navigating a quiet, dangerous environment",
+  "level": "Single static environment with limited areas",
+  "win_condition": "Survive until dawn or reach the exit",
+  "theme": "Atmospheric Survival in a Quiet, Dark World"
+}
+SCHEMA PASS (+2)
+REASONING SCORE: 6
+
+FINAL RAW SCORE: 9
+LATENCY: 0.980s
+================================================================================

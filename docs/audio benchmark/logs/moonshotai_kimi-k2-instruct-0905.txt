@@ -1,0 +1,17 @@
+================================================================================
+MODEL: moonshotai/kimi-k2-instruct-0905
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+
+Prompt (copy/paste as-is):
+
+“abandoned stone corridors, distant dripping water, sparse low drones in 0:45–1:15 min seamless loop, 60–70 bpm, no melody, no crescendi, no reverb tails longer than 2 s, footsteps on stone and thin metal grates recorded close-mic’d, cloth rustle layer at –18 LUFS, enemy breaths 15 % slower than human rate, occasional chain scrape at –24 LUFS, sub-bass swell only when player health < 25 %, never exceed –14 LUFS peak, filter 200 Hz–6 kHz, no sci-fi, no magic, no victory stingers, no jumps, no vocals”
+
+--------------------------------------------------------------------------------
+Instruction Following Score: 1/2
+Audio Coverage Score: 2/4
+Generation Quality Score: 6/6
+RAW FINAL SCORE: 9/12
+LATENCY: 1.012 seconds
+================================================================================

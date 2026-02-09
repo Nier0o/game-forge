@@ -1,0 +1,27 @@
+================================================================================
+MODEL: openai/gpt-oss-120b
+RAW OUTPUT:
+{
+  "genre": "survival action-adventure",
+  "player": "sword-wielding explorer",
+  "level": "single dark pixel-art map",
+  "win_condition": "reach the exit door or stairs to escape",
+  "theme": "quiet, atmospheric darkness with minimal sound and no horror jumpscares"
+}
+--------------------------------------------------------------------------------
+PURE JSON (+2)
+
+EXTRACTED JSON:
+{
+  "genre": "survival action-adventure",
+  "player": "sword-wielding explorer",
+  "level": "single dark pixel-art map",
+  "win_condition": "reach the exit door or stairs to escape",
+  "theme": "quiet, atmospheric darkness with minimal sound and no horror jumpscares"
+}
+SCHEMA PASS (+2)
+REASONING SCORE: 6
+
+FINAL RAW SCORE: 10
+LATENCY: 1.033s
+================================================================================

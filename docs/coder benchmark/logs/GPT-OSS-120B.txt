@@ -1,0 +1,96 @@
+Below is a **tiny, self‑contained** example that shows the core of what you asked for:
+
+* a `Player` that can move (WASD‑style) and swing a sword  
+* an `Enemy` that **chases** the player, then attacks when it is close enough  
+* a very small “state‑machine” (idle / move / attack) that lives inside each object  
+* a single game‑loop that could be dropped into any Python script (no pygame, no engine)
+
+You can copy‑paste the whole file, run it and watch the printed log to see what happens.  
+All numbers (speed, ranges, cooldowns…) are plain constants that you can tweak later – no hidden magic.
+
+```python
+# --------------------------------------------------------------
+# tiny_2d_logic.py
+# --------------------------------------------------------------
+# A minimal, pure‑Python “game” that only deals with positions,
+# distances, simple AI and cooldowns.  No graphics, no external libs.
+# --------------------------------------------------------------
+
+import time
+import math
+import random
+from typing import Tuple, List
+
+# ----------------------------------------------------------------------
+# Helper – a tiny 2‑D vector class (you could also use a tuple)
+# ----------------------------------------------------------------------
+class Vec2:
+    __slots__ = ("x", "y")
+
+    def __init__(self, x: float = 0.0, y: float = 0.0):
+        self.x = float(x)
+        self.y = float(y)
+
+    def __add__(self, other: "Vec2") -> "Vec2":
+        return Vec2(self.x + other.x, self.y + other.y)
+
+    def __sub__(self, other: "Vec2") -> "Vec2":
+        return Vec2(self.x - other.x, self.y - other.y)
+
+    def __mul__(self, scalar: float) -> "Vec2":
+        return Vec2(self.x * scalar, self.y * scalar)
+
+    def length(self) -> float:
+        return math.hypot(self.x, self.y)
+
+    def normalized(self) -> "Vec2":
+        l = self.length()
+        return Vec2(self.x / l, self.y / l) if l != 0 else Vec2(0, 0)
+
+    def as_tuple(self) -> Tuple[float, float]:
+        return (self.x, self.y)
+
+    def __repr__(self) -> str:
+        return f"Vec2({self.x:.2f}, {self.y:.2f})"
+
+
+# ----------------------------------------------------------------------
+# Global configuration (easy to change)
+# ----------------------------------------------------------------------
+PLAYER_SPEED = 5.0          # units per second
+ENEMY_SPEED = 3.0           # units per second
+SWORD_RANGE = 1.5           # distance from player centre to hit
+ENEMY_ATTACK_RANGE = 1.0    # distance at which enemy can strike
+PLAYER_ATTACK_COOLDOWN = 0.5   # seconds between sword swings
+ENEMY_ATTACK_COOLDOWN = 1.0    # seconds between enemy strikes
+ENEMY_DETECTION_RADIUS = 10.0 # how far the enemy can "see" the player
+
+# ----------------------------------------------------------------------
+# Simple state machine helpers
+# ----------------------------------------------------------------------
+def set_state(entity, new_state: str):
+    """Switch state and reset the state's timer."""
+    entity.state = new_state
+    entity.state_timer = 0.0
+
+
+# ----------------------------------------------------------------------
+# Player --------------------------------------------------------------
+# ----------------------------------------------------------------------
+class Player:
+    def __init__(self, start_pos: Vec2):
+        self.pos = start_pos
+        self.state = "idle"          # idle / move / attack
+        self.state_timer = 0.0       # time spent in current state
+        self.attack_cooldown = 0.0   # time until next swing allowed
+
+    # ------------------------------------------------------------------
+    # Input handling – in a real game you would read the keyboard.
+    # Here we simulate it with a function that returns a direction vector.
+    # ------------------------------------------------------------------
+    def get_input_direction(self) -> Vec2:
+        """
+        Return a direction based on a *random* choice.
+        Replace this with real input handling if you embed the code.
+        """
+        # 0 = no movement, 1 = up, 2 = down

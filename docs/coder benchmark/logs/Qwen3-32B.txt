@@ -1,0 +1,83 @@
+<think>
+Okay, let's see. The user wants to create a simple 2D game in Python with basic movement, sword attacks, enemies that follow the player, and simple AI. They don't want any fancy engines or overcomplicated code. Just the core logic.
+
+First, I need to outline the main components: player, enemies, game loop. The player should have position, velocity, and attack state. Enemies need to follow the player and attack when close.
+
+For movement, maybe use a direction vector and update position each frame. The player can move with inputs like WASD. Since there's no actual input handling here, the example can use variables like dx and dy.
+
+Attack mechanics: when the player presses attack (maybe a key), they can swing their sword. Need a cooldown so they can't attack too fast. The attack has a range, and checks if any enemies are within that range to damage them.
+
+Enemies should move towards the player. If they're too far, they move closer. If they're in attack range, they attack. Also, they need a cooldown for their attacks.
+
+States for both player and enemies: idle, move, attack. Simple state transitions based on conditions.
+
+The game loop will update all entities each frame. Need to handle positions, check distances, apply cooldowns.
+
+Let me think about data structures. Maybe dictionaries for player and enemies. Lists for multiple enemies. Each enemy has position, velocity, state, etc.
+
+Distance checks: calculate Euclidean distance between player and each enemy. If it's less than attack range, attack. Otherwise, move closer.
+
+Cooldowns can be handled with timers. For example, attack_cooldown that decreases each frame, and when it's zero, they can attack again.
+
+Now, putting it all together. The player has a position (x, y), velocity, attack range, attack cooldown. Same for enemies, but with different values. The game loop runs, updates player movement, checks for attacks, then updates each enemy.
+
+For the player attack, when they attack, check all enemies in range. For enemies, each checks if they can attack the player.
+
+Need to make sure the code is simple, no classes if possible. Use dictionaries and functions. Maybe functions to handle movement, state transitions.
+
+Let me sketch some code. Start with player and enemies as dictionaries. The game loop runs in a while True: loop, maybe with a delta time.
+
+Player movement: dx and dy based on input (but since there's no real input, maybe just example variables). Then update position.
+
+Attack: if attack is triggered and cooldown is 0, set attack state, reset cooldown.
+
+Enemies: for each enemy, calculate direction to player. If distance is too big, move towards. If close enough, attack. Check their attack cooldown.
+
+Collision detection: when attacking, check if enemies are in range. For player attack, loop through enemies and see if they are within attack distance.
+
+States: for player and enemies, track their current state (idle, move, attack). Transition based on conditions.
+
+Keep everything as simple as possible. Avoid classes, use dicts. No overengineering. Let the user modify values easily.
+
+Testing the code: since there's no graphics, maybe print states or positions. But the user just wants the logic.
+
+Potential issues: handling multiple enemies, making sure attack ranges and movement speeds are set appropriately. Also, cooldowns need to be managed correctly in the loop.
+
+I think that's a plan. Now write the code with these elements, keeping it readable and simple.
+</think>
+
+Here's a simple Python game logic framework with the features you requested. It uses dictionaries for entities and focuses on core mechanics without overengineering:
+
+```python
+# Basic game logic framework
+
+# Game constants
+PLAYER_SPEED = 2
+ENEMY_SPEED = 1
+ATTACK_COOLDOWN = 60  # frames
+ATTACK_RANGE = 30
+ENEMY_ATTACK_RANGE = 20
+ENEMY_FOLLOW_RANGE = 200
+
+# Game state
+player = {
+    'x': 100,
+    'y': 100,
+    'dx': 0,
+    'dy': 0,
+    'attack_cooldown': 0,
+    'state': 'idle'  # idle, move, attack
+}
+
+enemies = [
+    {'x': 200, 'y': 150, 'state': 'idle', 'attack_cooldown': 0},
+    {'x': 50, 'y': 50, 'state': 'idle', 'attack_cooldown': 0}
+]
+
+def update_player():
+    # Update player position
+    player['x'] += player['dx'] * PLAYER_SPEED
+    player['y'] += player['dy'] * PLAYER_SPEED
+    
+    # Check if moving
+    if player['dx'] != 0

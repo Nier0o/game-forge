@@ -1,0 +1,30 @@
+================================================================================
+MODEL: llama-3.3-70b-versatile
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+
+I think I understand what you're going for. Here's a prompt that might capture the essence of what you're looking for:
+
+"Generate a looping, atmospheric soundscapes with a focus on creating an unsettling, empty feeling. Incorporate subtle, heavy textures and muted tones to evoke a sense of unease. Include faint, realistic sound effects such as:
+
+* Distant, muffled footsteps on stone and metal surfaces
+* Quiet, labored breathing
+* Soft, dragging sounds (e.g. chains, fabric)
+* Creaking, rusty hinges
+
+Avoid any loud, jarring sounds, epic music, or heroic themes. Instead, opt for a more subdued, ominous tone that builds tension through subtle changes in texture and weight. When danger is near, introduce a slight, ominous shift in the soundscape, but avoid dramatic or attention-grabbing effects.
+
+Use a limited, muted color palette of sounds to create a sense of desolation and isolation. Imagine a abandoned, industrial environment with a sense of decay and neglect. The sound should be constant, but unobtrusive, allowing the player to focus on their surroundings and feel a sense of vulnerability.
+
+Loop the soundscape seamlessly, with no noticeable transitions or abrupt changes. The goal is to create a sense of unease and discomfort that settles in the background of the player's mind, rather than drawing attention to itself."
+
+You can feed this prompt into an audio generator, and see what kind of soundscape it produces. Feel free to modify or add to the prompt if you'd like to refine the results!
+
+--------------------------------------------------------------------------------
+Instruction Following Score: 1/2
+Audio Coverage Score: 4/4
+Generation Quality Score: 6/6
+RAW FINAL SCORE: 11/12
+LATENCY: 1.380 seconds
+================================================================================

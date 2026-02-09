@@ -1,0 +1,7 @@
+        Model  Latency  Instruction  Structure  Behavior  Soundness  Judge_Score  Instruction_Norm  Structure_Norm  Behavior_Norm  Soundness_Norm  Latency_Norm  Judge_Norm  Final_Score  Final_Score_Percent
+LLaMA-3.3-70B 2.169504            2          4         4          2            5               1.0            1.00           1.00             1.0      0.630743         0.8     0.901537            90.153714
+ GPT-OSS-120B 2.554840            1          3         4          2            6               0.5            0.75           1.00             1.0      0.484093         1.0     0.886705            88.670467
+      LLaMA-4 1.924225            2          4         4          2            3               1.0            1.00           1.00             1.0      0.724090         0.4     0.746204            74.620448
+         Kimi 3.826846            2          4         3          2            4               1.0            1.00           0.75             1.0      0.000000         0.6     0.727500            72.750000
+    Qwen3-32B 2.580648            2          4         4          2            2               1.0            1.00           1.00             1.0      0.474272         0.2     0.653714            65.371358
+  GPT-OSS-20B 1.199242            1          0         0          0            1               0.5            0.00           0.00             0.0      1.000000         0.0     0.100000            10.000000

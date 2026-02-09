@@ -1,0 +1,26 @@
+## Visual Design Brief – “The Forgotten”
+
+A gritty, low‑light world that tells its story **through shape, texture, and atmosphere** rather than flashy details. Everything is meant to look worn, functional, and a little bit hopeless – perfect for a pixel‑art game that wants the player to feel “surviving in an abandoned place.”
+
+---
+
+### 1. Core Mood & Tone
+| Aspect | Description |
+|--------|-------------|
+| **Overall vibe** | Decayed, abandoned, centuries‑old. Think a once‑busy fortress that has been left to rot. |
+| **Emotional cue** | Weariness, caution, quiet desperation. The player should feel “this place has been lived in, then left.” |
+| **Lighting** | Dim, low‑contrast. Light sources are **torches, flickering oil lamps, weak moonlight** that throw long, soft shadows. No pitch‑black rooms – always a faint glow to keep the scene readable. |
+| **Color palette** | 5‑7 muted tones. <br>• **Stone/Clay** – dusty browns, slate grays. <br>• **Rust/Metal** – oxidized copper, iron gray. <br>• **Faded leather** – muted tan, weathered brown. <br>• **Low‑light accent** – amber torch glow, pale blue moon. <br>• **Fog/Shadow** – very dark desaturated blues/charcoal. |
+| **Texture feel** | Rough stone, cracked plaster, rust‑streaked metal, frayed leather. Use **pixel dithering** and subtle noise to suggest wear without adding extra tiles. |
+
+---
+
+### 2. Technical Foundations (Pixel‑Art)
+
+| Parameter | Recommendation |
+|-----------|----------------|
+| **Resolution** | 16 × 16 px per character sprite, 32 × 32 px for most tiles (walls, floors, crates). Larger tiles (64 × 64 px) for key set‑pieces (e.g., a rusted gate). |
+| **Palette size** | 16‑color per scene (including shadows). Keeps the art tight and makes silhouette work easier. |
+| **Animation** | 2‑3 frames for idle breathing, 4‑6 frames for walking, 2‑3 frames for torch flicker. Keep motion subtle – a slow sway of a hanging chain, a puff of dust when a door opens. |
+| **Silhouette priority** | Every sprite must read clearly at a glance. Test by rendering the sprite in solid black against a white background; if you can still tell what it is, you’re good. |
+| **Layering** | Background

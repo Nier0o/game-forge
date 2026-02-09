@@ -1,0 +1,8 @@
+{
+  "GPT-OSS-120B": 6,
+  "LLaMA-3.3-70B": 5,
+  "Kimi": 4,
+  "LLaMA-4": 3,
+  "Qwen3-32B": 2,
+  "GPT-OSS-20B": 1
+}

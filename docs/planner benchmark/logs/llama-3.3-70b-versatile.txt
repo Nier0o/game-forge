@@ -1,0 +1,29 @@
+================================================================================
+MODEL: llama-3.3-70b-versatile
+RAW OUTPUT:
+```json
+{
+  "genre": "Survival",
+  "player": "Protagonist with a sword",
+  "level": "Single map",
+  "win_condition": "Reach an exit",
+  "theme": "Dark and quiet atmosphere"
+}
+```
+--------------------------------------------------------------------------------
+RECOVERABLE JSON (+1)
+
+EXTRACTED JSON:
+{
+  "genre": "Survival",
+  "player": "Protagonist with a sword",
+  "level": "Single map",
+  "win_condition": "Reach an exit",
+  "theme": "Dark and quiet atmosphere"
+}
+SCHEMA PASS (+2)
+REASONING SCORE: 6
+
+FINAL RAW SCORE: 9
+LATENCY: 0.361s
+================================================================================

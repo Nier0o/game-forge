@@ -1,0 +1,32 @@
+## Quick‑Start Visual Design Guide  
+*(Everything can be made in a 16 × 16 or 32 × 32 pixel grid – the exact size is up to you.)*
+
+---
+
+### 1. Overall Mood & Color Palette
+
+| Element | Color # | Description |
+|---------|---------|-------------|
+| Stone wall | #4A4A4A | Dark gray, slightly mottled |
+| Rust / corrosion | #8B4C2A | Deep reddish‑brown |
+| Dust / grime | #AFAFAF | Light gray, almost washed out |
+| Leather | #5B3A1E | Brown‑ish, worn |
+| Torch flame | #FF7F00 | Warm orange, no green glow |
+| Fog | #C0C0C0 | Soft gray, semi‑transparent |
+| Background (low‑light) | #2B2B2B | Very dark gray, not black |
+
+- **Keep the palette tight** – 5–7 colors total.  
+- Use **dithering** sparingly to blend stone and rust.  
+- Avoid bright, saturated hues (no neon, no crystal blues).
+
+---
+
+### 2. Environment Tiles
+
+| Tile | Pixel Size | Key Features | Silhouette Tips |
+|------|------------|--------------|-----------------|
+| Stone wall | 32 × 32 | Rough, uneven bricks, small cracks | Keep the outline simple; a single vertical line for a wall segment is enough. |
+| Floor (cobblestone) | 32 × 32 | Slightly uneven, dust motes | Use a subtle “step” in the silhouette to hint at depth. |
+| Rusted metal | 32 × 32 | Pitted, loose flakes | A jagged edge or a few missing pixels at the corners. |
+| Torch | 8 × 16 | Small flame, flicker | Flame can be a single 2‑pixel column that alternates between two shades. |
+| Fog | 32 × 32 (overlay) | Semi‑transparent, soft edges | Use a 1

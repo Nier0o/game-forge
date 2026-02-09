@@ -1,0 +1,44 @@
+================================================================================
+MODEL: qwen/qwen3-32b
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+
+<think>
+Okay, let me try to figure out how to approach this user's request. They want audio for a game that's quiet but not silent, creating an uncomfortable emptiness. They mentioned not wanting epic or heroic music, so I need to avoid anything uplifting or powerful. The key elements they highlighted are subtlety, tension without loud sounds, and a focus on environmental sounds like footsteps and enemy noises.
+
+First, the atmosphere needs to feel lonely and oppressive. Maybe using ambient sounds that are subtle but persistent. They want the player to feel alone, so perhaps using distant, faint sounds that suggest presence without being obvious. The user emphasized not wanting magic, sci-fi, or any modern tech sounds, so the setting is probably more like a dark, gritty fantasy or a post-apocalyptic industrial environment.
+
+Footsteps are important for immersion. Different surfaces like stone and metal will change the ambiance. I should suggest materials and how they affect sound. Also, enemy sounds should be subtle—breathing, dragging chains. No screams or jump scares, so the threats are always present but not overt.
+
+For the music, they want it to loop seamlessly without notice. Maybe using drones or long, sustained notes with minimal changes. When danger approaches, the music should get heavier, perhaps by adding low-frequency sounds or slight variations in the ambient noise. Since they don't know music theory, the suggestions should be simple, maybe using specific adjectives or existing references they can relate to.
+
+They also mentioned hating tutorials, so the prompt for the audio generator should be straightforward, avoiding technical terms. Words like "haunting," "minimalist," "dissonant" might work. Including specific elements like creaking doors, faint whispers, distant echoes. Maybe recommend using field recordings for authenticity.
+
+I should make sure to avoid any loud or jarring elements. The tension comes from subtlety, so the prompt needs to focus on layering soft sounds, using reverb and delay to create space, and maintaining a low, consistent hum or drone. Also, ensuring that the transitions between safe and dangerous states are smooth and not abrupt.
+
+Potential challenges: Translating the "heavier when dangerous" part without making it loud. Maybe increasing the density of sounds or introducing low rumbles. Also, ensuring that the loops don't feel repetitive by suggesting natural, organic sounds that can be layered.
+
+I think using terms like "subtle dissonance," "ambient textures," and "low-frequency drones" would help. Maybe suggest specific sound sources like old buildings creaking, wind in empty spaces, distant thunder. For the generator, they might need keywords or phrases that evoke these feelings without technical jargon.
+</think>
+
+**Audio Generation Prompt:**  
+
+**Mood:** Haunting emptiness, uneasy stillness, lingering dread.  
+
+**Soundscape Elements:**  
+- **Ambient Base:** Faint, distant hum of an empty space (think: low, slow creaks of old metal/stone, muffled wind in a cavern, or a faint, echoing drip of water).  
+- **Footsteps:** Subtle, textured layers—bare feet on cold stone, clinking metal chains, or echoing boots on grating. Let each step feel *present* but not loud.  
+- **Enemy Presence:** Barely-there whispers (like breath on the back of your neck), slow dragging of heavy objects, faint metallic *clinks* or *scrapes* as creatures move. No screams—just *presence*.  
+- **Tension Shifts:** When danger nears, add a low, rising drone (like a cello hum or distant rumble) that doesn’t overpower but feels heavier. Maybe a faint, dissonant note that lingers in the background.  
+
+**Music (if any):**  
+- Minimalist, looping. Imagine a single, mournful flute note that decays slowly, or a low, unresolved chord on
+
+--------------------------------------------------------------------------------
+Instruction Following Score: 0/2
+Audio Coverage Score: 4/4
+Generation Quality Score: 6/6
+RAW FINAL SCORE: 10/12
+LATENCY: 3.297 seconds
+================================================================================

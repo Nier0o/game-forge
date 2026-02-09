@@ -1,0 +1,100 @@
+No worries—here’s the smallest thing that still feels like a game.
+
+One file, <120 lines, no classes except two tiny data-blobs (Player, Enemy).  
+Everything else is plain functions.  
+Run it, watch the print-out, hack it.
+
+```python
+import math, time, random
+
+W, H = 20, 10          # world size (tiles)
+PLAYER_HP, ENEMY_HP = 3, 2
+SWORD_RANGE, SWORD_CD = 1.5, 0.5   # tiles, seconds
+MOVE_SPEED = 2.0                 # tiles per second
+DETECT_RANGE = 4.0               # enemy vision
+
+# tiny data holders -------------------------------------------------
+class Player:
+    def __init__(self):
+        self.x, self.y = float(W//2), float(H//2)
+        self.hp = PLAYER_HP
+        self.sword_ready = 0.0      # cooldown timer
+
+class Enemy:
+    def __init__(self, x, y):
+        self.x, self.y = float(x), float(y)
+        self.hp = ENEMY_HP
+        self.state = "idle"         # idle / move / attack
+        self.timer = 0.0            # generic state timer
+
+# helpers -----------------------------------------------------------
+def dist(a_x, a_y, b_x, b_y):
+    return math.hypot(a_x - b_x, a_y - b_y)
+
+def clamp(v, low, high):
+    return max(low, min(high, v))
+
+# game logic --------------------------------------------------------
+def move_toward(src_x, src_y, dst_x, dst_y, speed, dt):
+    dx, dy = dst_x - src_x, dst_y - src_y
+    d = dist(src_x, src_y, dst_x, dst_y) or 1e-6
+    step = speed * dt
+    if step >= d:          # reached
+        return dst_x, dst_y
+    return src_x + dx/d * step, src_y + dy/d * step
+
+def update_player(player, enemies, dt, keys):
+    # keys = dict with "up","down","left","right","attack": bool
+    dx = int(keys["right"]) - int(keys["left"])
+    dy = int(keys["down"])  - int(keys["up"])
+    if dx or dy:
+        norm = math.hypot(dx, dy) or 1
+        player.x = clamp(player.x + dx/norm * MOVE_SPEED * dt, 0, W)
+        player.y = clamp(player.y + dy/norm * MOVE_SPEED * dt, 0, H)
+
+    player.sword_ready = max(player.sword_ready - dt, 0)
+    if keys["attack"] and player.sword_ready <= 0:
+        player.sword_ready = SWORD_CD
+        for e in enemies[:]:
+            if dist(player.x, player.y, e.x, e.y) <= SWORD_RANGE:
+                e.hp -= 1
+                if e.hp <= 0:
+                    enemies.remove(e)
+
+def update_enemy(e, player, dt):
+    d = dist(e.x, e.y, player.x, player.y)
+    e.timer -= dt
+
+    if e.state == "idle":
+        if d <= DETECT_RANGE:
+            e.state = "move"
+    elif e.state == "move":
+        if d <= 1.2:                # close enough to hit
+            e.state, e.timer = "attack", 0.6
+        else:
+            e.x, e.y = move_toward(e.x, e.y, player.x, player.y, MOVE_SPEED*0.7, dt)
+    elif e.state == "attack":
+        if e.timer <= 0:
+            if d <= 1.2:
+                player.hp -= 1
+            e.state = "move" if d > DETECT_RANGE else "idle"
+
+def update_world(player, enemies, dt, keys):
+    update_player(player, enemies, dt, keys)
+    for e in enemies[:]:
+        update_enemy(e, player, dt)
+
+# tiny ascii renderer (optional) ------------------------------------
+def draw(player, enemies):
+    grid = [["." for _ in range(W)] for _ in range(H)]
+    for e in enemies:
+        grid[int(e.y)][int(e.x)] = "E"
+    grid[int(player.y)][int(player.x)] = "P"
+    print("\n".join("".join(row) for row in grid))
+    print(f"HP:{player.hp}  Enemies:{len(enemies)}")
+
+# -------------------------------------------------------------------
+# fake input for demo
+def fake_keys(t):
+    return {"up": False, "down": False, "left": False,
+            "right": True, "attack": int(t*2)%3

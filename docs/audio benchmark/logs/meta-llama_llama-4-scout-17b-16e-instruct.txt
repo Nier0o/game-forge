@@ -1,0 +1,65 @@
+================================================================================
+MODEL: meta-llama/llama-4-scout-17b-16e-instruct
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+
+Based on your description, I've come up with some audio generation prompts that might fit the atmosphere you're looking for:
+
+**Music Prompts:**
+
+* "Create a quiet, ambient soundtrack with a sense of emptiness. Use low, muted tones and subtle textures to create an uncomfortable silence."
+* "Generate a loopable, atmospheric sound that feels like a gentle hum or a soft murmur. Avoid any dramatic or heroic elements."
+* "Design a soundscape that feels isolated and lonely. Use minimalist, ambient sounds to create a sense of space and quiet contemplation."
+
+**Sound Effects Prompts:**
+
+* "Create a set of footsteps sounds for stone, metal, and possibly wood or dirt. Make them crisp and clear, but not loud or jarring."
+* "Design enemy sound effects that focus on breathing, dragging, and movement. Use low, guttural sounds to create a sense of presence without being too intense."
+* "Generate chain sounds that are heavy and metallic, but not screechy or loud. Use these to create a sense of tension and unease."
+
+**Tension and Danger Prompts:**
+
+* "When danger is near, subtly shift the music and sound effects to create a sense of heaviness or unease. Avoid dramatic or jarring changes."
+* "Create a sense of tension through sound effects, such as creaking doors, scraping metal, or heavy breathing. Keep these sounds low and muted."
+
+**Instrument and Sound Design Prompts:**
+
+* "Use instruments and sounds that create a sense of decay, neglect, or abandonment. Think old, worn-out materials, like rusty metal, creaky wood, or damp stone."
+* "Avoid bright, sharp, or piercing sounds. Opt for muted, warm, and low-frequency sounds that create a sense of comfort and unease at the same time."
+
+**Looping and Integration Prompts:**
+
+* "Create a soundtrack that loops seamlessly, without any noticeable transitions or jarring changes."
+* "Design sound effects that blend smoothly into the background, creating a cohesive and immersive atmosphere."
+
+Some possible keywords to feed into an audio generator:
+
+* Ambient
+* Atmospheric
+* Empty
+* Quiet
+* Uncomfortable
+* Isolated
+* Lonely
+* Muted
+* Low-frequency
+* Heavy
+* Metallic
+* Stone
+* Footsteps
+* Breathing
+* Dragging
+* Chains
+* Creaking
+* Scraping
+
+Feel free to adjust or add to these prompts to fit your specific needs. Good luck with your audio generation!
+
+--------------------------------------------------------------------------------
+Instruction Following Score: 1/2
+Audio Coverage Score: 4/4
+Generation Quality Score: 6/6
+RAW FINAL SCORE: 11/12
+LATENCY: 1.433 seconds
+================================================================================

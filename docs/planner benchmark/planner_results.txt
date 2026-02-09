@@ -1,0 +1,7 @@
+        Model  Latency  Raw_Final_Score  Pure_JSON_Score  Schema_Score  Reasoning_Score  Pure_JSON_Norm  Schema_Norm  Reasoning_Norm  Latency_Norm  Final_Score_Norm  Final_Score_Percent
+         Kimi 0.481162               12                2             2                8             1.0          1.0            1.00      0.821638          0.982164            98.216375
+LLaMA-3.3-70B 0.361378                9                1             2                6             0.5          1.0            0.75      1.000000          0.787500            78.750000
+ GPT-OSS-120B 1.032957               10                2             2                6             1.0          1.0            0.75      0.000000          0.762500            76.250000
+    Qwen3-32B 0.979939                9                1             2                6             0.5          1.0            0.75      0.078946          0.695395            69.539457
+  GPT-OSS-20B 0.656796                8                2             2                4             1.0          1.0            0.50      0.560115          0.681011            68.101147
+      LLaMA-4 0.892243                7                1             2                4             0.5          1.0            0.50      0.209528          0.570953            57.095279

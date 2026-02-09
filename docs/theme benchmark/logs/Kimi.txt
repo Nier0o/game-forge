@@ -1,0 +1,81 @@
+You’re already designing—this *is* the brief.  
+Here’s a visual ruleset you (or an artist) can follow without ever losing the feeling.
+
+--------------------------------------------------
+1. Palette (8-color master set, no others allowed)
+   #0c0c0c almost-black  
+   #23231c dirty brown-black  
+   #3d3a33 cold stone  
+   #50453a rotted wood  
+   #6b5d52 old leather  
+   #8b7f78 faded cloth  
+   #a19c8a ashy highlight  
+   #4a4e38 sick moss  
+
+Use only these. No pure whites, no saturation above 15 %.  
+Let single pixels of the moss color suggest lichen on walls; that’s the only “life” permitted.
+
+--------------------------------------------------
+2. Tiles (16×16 grid, 2-pixel outline inside edge so shapes read at 1× or 4×)
+
+Wall  
+Single-tone stone blocks, cracks 1 px wide, running like veins.  
+One missing brick every 3-4 blocks; the gap is black inside = depth.
+
+Floor  
+Flat mid-gray, scattered 1–2 px speckles (dust).  
+Occasional 8×8 stain darker than base; never repeated in same spot twice in a row.
+
+Torch  
+Stick: 3 vertical pixels wide, 6 high, brown-black.  
+Flame: 5 px teardrop, dithered 50 % transparency of ash highlight color.  
+Light halo: 32 px radius gradient using only the three darkest colors; no circles, jagged edge to feel smoky.
+
+--------------------------------------------------
+3. Character template (24×32 sprite, 3-frame walk)
+
+Silhouette first: hood blob, slumped shoulders, no neck.  
+One leather strap across chest, 1 px thick.  
+Feet are 2×2 rectangles; knees barely lift.  
+No eyes visible under hood; if facing player, two single-pixel dots of highlight color max.  
+Animation: head stays down, body shifts 1 px left/right; the exhaustion is in the lack of bob.
+
+--------------------------------------------------
+4. Items (8×8 or 16×16, placed on ground)
+
+Key  
+Three teeth only, blunt, gray same as stone.  
+1 px highlight on edge to catch torchlight.
+
+Potion  
+Crude clay bottle, 8 px high, neck thicker than modern vials.  
+Cork is just 2 brown pixels.  
+No label; one 1-pixel crack near base.
+
+Weapon  
+Short sword: blade 12 px, chipped edge drawn with single missing pixel every 4 px.  
+Handle wrapped in leather color, two wraps only, frayed end sticking out 1 px.
+
+--------------------------------------------------
+5. Fog / Depth  
+Overlay a 64×64 semi-transparent tile (use color #0c0c0c at 30 % opacity) scrolling slowly.  
+Let it erase detail; the player should squint, not admire.
+
+--------------------------------------------------
+6. Story without text  
+- Doorframe taller than walls = once important, now empty hinges.  
+- Blood replaced by 2-pixel darker stain; no red, just shade.  
+- Chains hanging from ceiling, last link broken open = escape, not rescue.  
+- Footprints in dust: 1 px dots, stride longer than player’s = someone hurried, still out there.
+
+--------------------------------------------------
+7. Technical limits to keep it honest  
+Max sprite size 32×32.  
+Max animation frames 3 for anything that moves.  
+No shader, no rotation; flip horizontal only.  
+Light is painted into sprites, not engine light.  
+Screen shake 1 px left/right for hits, 2 frames only.
+
+--------------------------------------------------
+8. One-sentence reminder to yourself  
+“If I want to add something, first remove something else.”

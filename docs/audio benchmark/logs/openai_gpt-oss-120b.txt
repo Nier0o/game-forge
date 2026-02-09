@@ -1,0 +1,23 @@
+================================================================================
+MODEL: openai/gpt-oss-120b
+--------------------------------------------------------------------------------
+
+RAW OUTPUT:
+
+Create a 2‑minute ambient loop (≈30 dB RMS) for a horror‑exploration game:
+
+- Base layer: low, sustained drone of muted metallic resonances mixed with a faint, cold wind hiss. Keep it just audible enough to fill silence but never dominate.
+- Texture: occasional distant creaking wood and subtle floorboard groans to give an empty, unsettling feeling.
+- Footsteps: alternating short, muted thuds for stone (dry, low‑pitched) and soft, light clangs for metal, panned slightly left/right to convey player movement.
+- Enemy presence (when not visible): barely audible shallow breathing, faint dragging of cloth, and occasional soft chain rattles, all kept under the drone.
+- Danger cue: a barely perceptible increase in low‑frequency rumble and a slight thickening of the drone, no volume spikes, no melodic change.
+- No heroic, epic, magical, sci‑fi, laser, or loud elements.
+- Ensure the track loops seamlessly with no audible cut.
+
+--------------------------------------------------------------------------------
+Instruction Following Score: 0/2
+Audio Coverage Score: 3/4
+Generation Quality Score: 4/6
+RAW FINAL SCORE: 7/12
+LATENCY: 1.690 seconds
+================================================================================

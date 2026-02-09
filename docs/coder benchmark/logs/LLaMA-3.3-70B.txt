@@ -1,0 +1,104 @@
+Here's a simple implementation of your game logic in Python. This code uses a basic game loop and update functions to manage the player and enemies.
+
+```python
+import math
+import random
+
+# Constants
+PLAYER_SPEED = 2
+ENEMY_SPEED = 1
+ATTACK_COOLDOWN = 10  # frames
+ENEMY_ATTACK_DISTANCE = 5
+ENEMY_FOLLOW_DISTANCE = 10
+
+# Player class
+class Player:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.attack_cooldown = 0
+
+    def update(self):
+        self.attack_cooldown -= 1
+
+    def move(self, dx, dy):
+        self.x += dx * PLAYER_SPEED
+        self.y += dy * PLAYER_SPEED
+
+    def attack(self):
+        if self.attack_cooldown <= 0:
+            self.attack_cooldown = ATTACK_COOLDOWN
+            return True
+        return False
+
+# Enemy class
+class Enemy:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.state = "idle"
+        self.attack_cooldown = 0
+
+    def update(self, player):
+        distance = math.hypot(self.x - player.x, self.y - player.y)
+        if distance < ENEMY_ATTACK_DISTANCE:
+            self.state = "attack"
+        elif distance < ENEMY_FOLLOW_DISTANCE:
+            self.state = "move"
+        else:
+            self.state = "idle"
+
+        if self.state == "attack":
+            if self.attack_cooldown <= 0:
+                self.attack_cooldown = ATTACK_COOLDOWN
+                print("Enemy attacks!")
+        elif self.state == "move":
+            dx = player.x - self.x
+            dy = player.y - self.y
+            angle = math.atan2(dy, dx)
+            self.x += math.cos(angle) * ENEMY_SPEED
+            self.y += math.sin(angle) * ENEMY_SPEED
+        self.attack_cooldown -= 1
+
+# Game loop
+def game_loop():
+    player = Player(0, 0)
+    enemies = [Enemy(10, 10), Enemy(-10, -10)]
+
+    while True:
+        # Update player
+        player.update()
+
+        # Get user input
+        dx = 0
+        dy = 0
+        action = input("Enter a direction (W, A, S, D) or 'attack': ")
+        if action.lower() == "w":
+            dy = -1
+        elif action.lower() == "s":
+            dy = 1
+        elif action.lower() == "a":
+            dx = -1
+        elif action.lower() == "d":
+            dx = 1
+        elif action.lower() == "attack":
+            if player.attack():
+                print("Player attacks!")
+
+        player.move(dx, dy)
+
+        # Update enemies
+        for enemy in enemies:
+            enemy.update(player)
+
+        # Print game state
+        print(f"Player position: ({player.x}, {player.y})")
+        for i, enemy in enumerate(enemies):
+            print(f"Enemy {i+1} position: ({enemy.x}, {enemy.y})")
+
+game_loop()
+```
+
+This code defines a `Player` class and an `Enemy` class, each with their own update and movement functions. The game loop updates the player and enemies, and prints the game state after each update. The player can move and attack, and the enemies will follow the player and attack when they get close.
+
+Note that this is a very basic implementation, and you may want to add more features such as collision detection, boundary checking, and more complex AI for the enemies.

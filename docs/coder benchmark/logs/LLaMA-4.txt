@@ -1,0 +1,105 @@
+**Game Logic in Python**
+========================
+
+### Game Entities
+
+We'll define simple entities for the player, enemies, and sword.
+
+```python
+import math
+
+class Entity:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+class Player(Entity):
+    def __init__(self, x, y):
+        super().__init__(x, y)
+        self.state = 'idle'
+        self.sword_cooldown = 0
+
+class Enemy(Entity):
+    def __init__(self, x, y):
+        super().__init__(x, y)
+        self.state = 'idle'
+
+class Sword:
+    def __init__(self, owner):
+        self.owner = owner
+        self.cooldown = 0
+```
+
+### Game Logic
+
+We'll create a simple game loop with update functions.
+
+```python
+def distance(entity1, entity2):
+    return math.sqrt((entity1.x - entity2.x) ** 2 + (entity1.y - entity2.y) ** 2)
+
+def update_player(player, enemies):
+    if player.state == 'move':
+        # Update player position
+        player.x += 1  # Replace with actual movement logic
+        player.y += 1  # Replace with actual movement logic
+
+    if player.sword_cooldown > 0:
+        player.sword_cooldown -= 1
+
+def update_enemies(enemies, player):
+    for enemy in enemies:
+        if enemy.state == 'idle':
+            # Simple AI: move towards player
+            if distance(enemy, player) > 5:
+                enemy.x += (player.x - enemy.x) / 10
+                enemy.y += (player.y - enemy.y) / 10
+            else:
+                enemy.state = 'attack'
+
+        elif enemy.state == 'attack':
+            # Attack player if close enough
+            if distance(enemy, player) <= 2:
+                print("Enemy attacks player!")
+            else:
+                enemy.state = 'idle'
+
+def update_sword(sword, player):
+    if sword.cooldown > 0:
+        sword.cooldown -= 1
+
+def handle_input(player, sword):
+    # Replace with actual input handling
+    if player.state == 'idle':
+        player.state = 'move'
+    elif player.state == 'move':
+        player.state = 'attack'
+        sword.cooldown = 10  # Replace with actual cooldown value
+        player.sword_cooldown = 10  # Replace with actual cooldown value
+```
+
+### Game Loop
+
+```python
+def game_loop(player, enemies, sword):
+    while True:
+        handle_input(player, sword)
+        update_player(player, enemies)
+        update_enemies(enemies, player)
+        update_sword(sword, player)
+
+        # Print game state
+        print(f"Player state: {player.state}, position: ({player.x}, {player.y})")
+        for enemy in enemies:
+            print(f"Enemy state: {enemy.state}, position: ({enemy.x}, {enemy.y})")
+
+# Initialize game entities
+player = Player(0, 0)
+enemies = [Enemy(10, 10), Enemy(20, 20)]
+sword = Sword(player)
+
+# Start game loop
+game_loop(player, enemies, sword)
+```
+
+This code provides a basic structure for your 2D game. You can modify and extend it as needed. Note that this is a simplified example and you may want to add more features, such as collision detection, boundary checking, and more complex AI.

@@ -1,0 +1,21 @@
+================================================================================
+MODEL: openai/gpt-oss-20b
+RAW OUTPUT:
+{"genre":"survival","player":"human","level":"single map","win_condition":"reach the exit door","theme":"dark, quiet, atmospheric pixel art exploration"}
+--------------------------------------------------------------------------------
+PURE JSON (+2)
+
+EXTRACTED JSON:
+{
+  "genre": "survival",
+  "player": "human",
+  "level": "single map",
+  "win_condition": "reach the exit door",
+  "theme": "dark, quiet, atmospheric pixel art exploration"
+}
+SCHEMA PASS (+2)
+REASONING SCORE: 4
+
+FINAL RAW SCORE: 8
+LATENCY: 0.657s
+================================================================================
