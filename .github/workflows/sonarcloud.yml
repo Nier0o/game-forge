@@ -21,12 +21,11 @@ jobs:
           node-version: 20
 
       - run: npm install
+        working-directory: mcp-server
 
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-
-      - run: pip install -r scripts/requirements.txt
 
       - uses: SonarSource/sonarcloud-github-action@master
         env:
