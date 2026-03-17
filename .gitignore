@@ -12,3 +12,4 @@ builds/
 # Docker
 # docker-compose.dev.yml
 /.scannerwork
+/.claude
