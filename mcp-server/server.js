@@ -1,6 +1,6 @@
 import { EventEmitter } from "events";
 import { v4 as uuidv4 } from "uuid";
-import tools from "./tools/toolDefinitions.js";
+import { tools } from "./tools/toolDefinition.js";
 import PlannerAdapter from "./adapters/plannerAdapter.js";
 import AssetAdapter from "./adapters/assetAdapter.js";
 import CodeAdapter from "./adapters/codeAdapter.js";

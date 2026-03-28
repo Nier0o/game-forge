@@ -54,11 +54,15 @@ class CodeAdapter {
     const mainScene = this.generateMainScene(gamePlan, assets);
     scenes.push(mainScene);
 
-    const playerScene = this.generatePlayerScene(playerEntity, assets);
-    scenes.push(playerScene);
+    if (playerEntity) {
+      const playerScene = this.generatePlayerScene(playerEntity, assets);
+      scenes.push(playerScene);
+    }
 
-    const enemyScene = this.generateEnemyScene(enemies[0], assets);
-    scenes.push(enemyScene);
+    if (enemies.length > 0) {
+      const enemyScene = this.generateEnemyScene(enemies[0], assets);
+      scenes.push(enemyScene);
+    }
 
     console.log(`[CodeAdapter] Generated ${scripts.length} scripts and ${scenes.length} scenes`);
 
