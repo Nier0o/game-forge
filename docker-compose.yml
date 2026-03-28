@@ -1,5 +1,9 @@
 services:
     backend:
+        # build:
+        #     context: ../game-forge-backend
+        #     dockerfile: Dockerfile
+        # image: game-forge-backend:latest
         image: ghcr.io/game-forge-studio/game-forge-backend:latest
         ports:
             - '5000:5000'
@@ -7,10 +11,18 @@ services:
             - ../game-forge-backend/.env
         container_name: game-forge-backend
         environment:
-            - DATABASE_LOCAL=mongodb://mongo:27017/gameforge
+            - MONGODB_DOCKER_URL=mongodb://mongo:27017/gameforge
             - NODE_ENV=development
+            - STORAGE_PROVIDER=minio
+            - MINIO_ENDPOINT=minio
+            - MINIO_PORT=9000
+            - MINIO_USE_SSL=false
+            - MINIO_BUCKET=game-forge-games
         depends_on:
-            - mongo
+            mongo:
+                condition: service_started
+            minio:
+                condition: service_healthy
 
     mongo:
         image: mongo:latest
@@ -18,40 +30,39 @@ services:
             - '27017:27017'
         container_name: game-forge-mongo
         volumes:
-            - mongo-prod-data:/data/db
+            - mongo-data:/data/db
+
+    minio:
+        image: minio/minio:latest
+        container_name: game-forge-minio
+        command: server /data --console-address ":9001"
+        ports:
+            - '9000:9000'
+            - '9001:9001'
+        env_file:
+            - ../game-forge-backend/.env
+        volumes:
+            - minio-data:/data
+        healthcheck:
+            test: ["CMD", "mc", "ready", "local"]
+            interval: 5s
+            timeout: 5s
+            retries: 5
 
     frontend:
+        # build:
+        #     context: ../game-forge-frontend
+        #     dockerfile: Dockerfile
+        # image: game-forge-frontend:latest
         image: ghcr.io/game-forge-studio/game-forge-frontend:latest
         ports:
             - '3000:3000'
         env_file:
             - ../game-forge-frontend/.env
         container_name: game-forge-frontend
-        environment:
-            - VITE_API_URL=http://backend:5000
         depends_on:
             - backend
-        extra_hosts:
-            - "backend:host-gateway"
-
-    # --- FUTURE SERVICES PLACEHOLDERS ---
-    # ai-engine:
-    #   image: gameforge-ai
-    #   build:
-    #     context: ../mcp-server # or ../ai
-    #     dockerfile: ../docker/ai/Dockerfile
-    #   ports:
-    #     - "8000:8000"
-    #   volumes:
-    #     - ../mcp-server:/app
-
-    # godot:
-    #   image: gameforge-godot
-    #   build:
-    #     context: ../godot
-    #     dockerfile: ../docker/godot/Dockerfile
-    #   volumes:
-    #     - ../godot:/app
 
 volumes:
-    mongo-prod-data:
+    mongo-data:
+    minio-data:
