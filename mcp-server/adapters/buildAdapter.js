@@ -23,7 +23,7 @@ class BuildAdapter {
     console.log(`[BuildAdapter] Running: ${godotCommand}`);
 
     try {
-      const { stdout, stderr } = await execAsync(godotCommand);
+      const { stderr } = await execAsync(godotCommand);
       if (stderr) console.warn(`[BuildAdapter] stderr: ${stderr}`);
       console.log(`[BuildAdapter] Build succeeded for ${projectId}`);
     } catch (err) {
