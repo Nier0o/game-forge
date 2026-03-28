@@ -16,6 +16,10 @@ class CodeAdapter {
    * Execute code generation
    */
   async execute({ gamePlan, assets }) {
+    if (!gamePlan || !Array.isArray(gamePlan.entities)) {
+      throw new Error('Invalid gamePlan: missing or malformed entities array');
+    }
+
     console.log(`[CodeAdapter] Generating code for: ${gamePlan.title}`);
 
     const scripts = [];

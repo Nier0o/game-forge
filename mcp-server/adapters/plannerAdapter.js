@@ -22,7 +22,7 @@ class PlannerAdapter {
 
     try {
       const response = await this.openai.chat.completions.create({
-        model: "gpt-4",
+        model: process.env.OPENAI_MODEL || "gpt-4",
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: userPrompt }
@@ -53,7 +53,7 @@ You must respond with a valid JSON object containing the game plan.
 The JSON structure must be:
 {
   "title": "Game Title",
-  "genre": "action/puzzle/adventure/shooter",
+  "genre": "action/shooter/puzzle/adventure/platformer/rpg",
   "gameType": "${gameType}",
   "description": "Brief description",
   "mechanics": {
