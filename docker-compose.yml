@@ -24,6 +24,20 @@ services:
             minio:
                 condition: service_healthy
 
+    frontend:
+            # build:
+            #     context: ../game-forge-frontend
+            #     dockerfile: Dockerfile
+            # image: game-forge-frontend:latest
+            image: ghcr.io/game-forge-studio/game-forge-frontend:latest
+            ports:
+                - '3000:3000'
+            env_file:
+                - ../game-forge-frontend/.env
+            container_name: game-forge-frontend
+            depends_on:
+                - backend
+
     mongo:
         image: mongo:latest
         ports:
@@ -48,20 +62,6 @@ services:
             interval: 5s
             timeout: 5s
             retries: 5
-
-    frontend:
-        # build:
-        #     context: ../game-forge-frontend
-        #     dockerfile: Dockerfile
-        # image: game-forge-frontend:latest
-        image: ghcr.io/game-forge-studio/game-forge-frontend:latest
-        ports:
-            - '3000:3000'
-        env_file:
-            - ../game-forge-frontend/.env
-        container_name: game-forge-frontend
-        depends_on:
-            - backend
 
 volumes:
     mongo-data:
