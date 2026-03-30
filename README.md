@@ -1,84 +1,95 @@
 # Game Forge
 
-Game Forge is a web platform that generates simple playable games from natural language prompts using AI and the Godot engine.
+A web platform that generates browser-playable games from natural language prompts. Describe a game, refine the design through an AI chat, and get back a real Godot 4 HTML5 export you can play in the browser or download.
 
-## Project Structure
+## How It Works
+
+1. User writes a prompt describing a game
+2. An AI assistant (Groq LLM) converses with the user to refine the game design
+3. A generation pipeline plans the game, generates assets and GDScript code, and exports it via Godot 4 headless
+4. The exported HTML5 game is stored in MinIO and served back through the API
+
+## Repository Layout
+
+This monorepo contains three separate Git repositories and the Docker Compose orchestration:
 
 ```
-game-forge/
-├── backend/    # Node.js + Express API
-├── frontend/   # React + Vite UI (Tailwind CSS)
-├── docker/     # Docker configuration files
-├── godot/      # Godot engine projects
-├── mcp-server/ # Model Context Protocol server
-└── scripts/    # Utility scripts
+game-forge/               ← you are here (orchestration + MCP server)
+├── docker-compose.yml    ← full-stack Docker Compose
+├── mcp-server/           ← Model Context Protocol server (game generation pipeline)
+│   ├── server.js
+│   ├── adapters/         ← planner, asset, code, build adapters
+│   └── tools/            ← MCP tool definitions
+└── docs/
+
+game-forge-backend/       ← Node.js/Express REST API
+game-forge-frontend/      ← React/Vite web UI
 ```
 
-## Architecture & Services
+## Services
 
-### 1. Frontend
+| Service  | Image / Source                                      | Port       | Description                        |
+|----------|-----------------------------------------------------|------------|------------------------------------|
+| backend  | `ghcr.io/game-forge-studio/game-forge-backend`      | 5000       | REST API, auth, game pipeline      |
+| frontend | `ghcr.io/game-forge-studio/game-forge-frontend`     | 3000       | React UI                           |
+| mongo    | `mongo:latest`                                      | 27017      | Database (persistent volume)       |
+| minio    | `minio/minio:latest`                                | 9000, 9001 | Object storage for game exports    |
 
-- **Path**: `/frontend`
-- **Tech Stack**: React, Vite, Tailwind CSS
-- **Port**: 3000 (Docker), 5173 (Local)
-- **Role**: User interface for prompting and playing games.
+## Quick Start
 
-### 2. Backend
+### Prerequisites
 
-- **Path**: `/backend`
-- **Tech Stack**: Node.js, Express, Puppeteer
-- **Port**: 5000
-- **Role**: Orchestrates requests, manages database, and handles AI/Godot pipelines.
+- Docker Desktop
 
-### 3. Database
+### 1. Configure environment
 
-- **Type**: MongoDB
-- **Port**: 27017
-- **Role**: Stores user profiles, prompts, and game metadata. Data is persisted in a Docker volume.
+Create `game-forge-backend/.env` (see [backend README](../game-forge-backend/README.md) for all variables):
 
-## Quick Start (Docker)
+```env
+JWT_SECRET=your_jwt_secret_here
+JWT_EXPIRES_IN=90d
+JWT_COOKIE_EXPIRES_IN=90
+GROQ_API_KEY=your_groq_api_key
+MINIO_ACCESS_KEY=minioadmin
+MINIO_SECRET_KEY=minioadmin
+```
 
-To run the full stack (Frontend + Backend + Database):
+Create `game-forge-frontend/.env`:
+
+```env
+VITE_API_URL=http://localhost:5000/api
+VITE_BACKEND_URL=http://localhost:5000
+```
+
+### 2. Run
 
 ```bash
-docker-compose -f docker/docker-compose.yml up --build
+cd game-forge
+docker compose up
 ```
 
-- Frontend: http://localhost:3000
-- Backend: http://localhost:5000/api/v1/health
+| URL                          | What                        |
+|------------------------------|-----------------------------|
+| http://localhost:3000        | Web UI                      |
+| http://localhost:5000/api/health | Backend health check    |
+| http://localhost:9001        | MinIO console               |
 
-## Development Workflow
+## Tech Stack
 
-### 1. Backend & Database
+| Layer       | Technology                                          |
+|-------------|-----------------------------------------------------|
+| Frontend    | React 18, Vite, Tailwind CSS 4                      |
+| Backend     | Node.js, Express 4, Mongoose 8                      |
+| Auth        | JWT (jsonwebtoken), bcryptjs                        |
+| Database    | MongoDB                                             |
+| Storage     | MinIO (S3-compatible)                               |
+| LLM         | Groq SDK (game design chat)                         |
+| Game engine | Godot 4.2.1 (headless HTML5 export)                 |
+| Security    | Helmet, express-rate-limit, xss-clean, mongo-sanitize, CORS allowlist |
 
-These services are best run via Docker to ensure environment consistency.
+## Current Status
 
-```bash
-docker-compose -f docker/docker-compose.yml up --build
-```
-
-### 2. Frontend (Local Development)
-
-For faster iteration with Hot Module Replacement (HMR), run the frontend locally.
-
-1. Ensure Backend is running (via Docker).
-2. Create a `.env` file in the `frontend` folder:
-    ```env
-    VITE_API_URL=http://localhost:5000
-    ```
-3. Run the development server:
-    ```bash
-    cd frontend
-    npm install
-    npm start
-    ```
-4. Access at http://localhost:5173
-
-## Current Progress
-
-- [x] Backend: Initial setup, Dockerized, Database connection.
-- [x] Frontend: React app initialized, connected to Backend.
-- [x] Infrastructure: Docker Compose for orchestration.
-- [ ] AI Engine: (Pending)
-- [ ] Godot Engine: (Pending)
-- [ ] MCP Server: (Pending)
+The platform scaffolding is complete:
+- User auth, project management, and chat are fully working
+- Docker orchestration, Godot export pipeline infrastructure, and MinIO storage are in place
+- The MCP server adapters (planner, asset generation, code generation) are stubs — this is the active area of development
