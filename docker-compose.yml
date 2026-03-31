@@ -41,7 +41,6 @@ services:
         build:
             context: ../game-forge-gen-service
             dockerfile: Dockerfile
-        image: game-forge-gen-service:latest
         ports:
             - '6000:6000'
         container_name: game-forge-gen-service
