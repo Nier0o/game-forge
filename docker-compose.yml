@@ -37,6 +37,40 @@ services:
             depends_on:
                 - backend
 
+    gen-service:
+        build:
+            context: ../game-forge-gen-service
+            dockerfile: Dockerfile
+        image: game-forge-gen-service:latest
+        ports:
+            - '6000:6000'
+        container_name: game-forge-gen-service
+        env_file:
+            - ../game-forge-gen-service/.env
+        environment:
+            - MONGODB_URL=mongodb://mongo:27017/gameforge
+            - MINIO_ENDPOINT=minio
+            - MINIO_PORT=9000
+            - MINIO_USE_SSL=false
+            - MINIO_BUCKET=game-forge-games
+            - PORT=6000
+            - PLANNER_PROVIDER=groq
+            - PLANNER_MODEL=qwen/qwen3-32b
+            - CODER_PROVIDER=groq
+            - CODER_MODEL=openai/gpt-oss-120b
+            - THEME_PROVIDER=stub
+            - AUDIO_PROVIDER=stub
+        depends_on:
+            mongo:
+                condition: service_started
+            minio:
+                condition: service_healthy
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:6000/health"]
+            interval: 10s
+            timeout: 5s
+            retries: 3
+
     mongo:
         image: mongo:latest
         ports:
