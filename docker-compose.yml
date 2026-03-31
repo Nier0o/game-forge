@@ -38,9 +38,11 @@ services:
                 - backend
 
     gen-service:
-        build:
-            context: ../game-forge-gen-service
-            dockerfile: Dockerfile
+        # build:
+        #     context: ../game-forge-gen-service
+        #     dockerfile: Dockerfile
+        # image: game-forge-server:latest
+        image: ghcr.io/game-forge-studio/game-forge-server:latest
         ports:
             - '6000:6000'
         container_name: game-forge-gen-service
