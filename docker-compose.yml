@@ -54,6 +54,8 @@ services:
             - MINIO_USE_SSL=false
             - MINIO_BUCKET=game-forge-games
             - PORT=6000
+            - SUMMARIZER_PROVIDER=groq
+            - SUMMARIZER_MODEL=qwen/qwen3-32b
             - PLANNER_PROVIDER=groq
             - PLANNER_MODEL=qwen/qwen3-32b
             - CODER_PROVIDER=groq
