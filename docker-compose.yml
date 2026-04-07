@@ -11,12 +11,14 @@ services:
             - ../game-forge-backend/.env
         container_name: game-forge-backend
         environment:
-            - MONGODB_DOCKER_URL=mongodb://mongo:27017/gameforge
+            - MONGODB_URL=mongodb://mongo:27017/gameforge
             - NODE_ENV=development
             - MINIO_ENDPOINT=minio
             - MINIO_PORT=9000
             - MINIO_USE_SSL=false
             - MINIO_BUCKET=game-forge-games
+            - GEN_SERVICE_URL=http://server:6100
+            - CORS_ALLOWED_ORIGINS=http://localhost:3000,http://host.docker.internal:3000
         depends_on:
             mongo:
                 condition: service_started
@@ -24,18 +26,18 @@ services:
                 condition: service_healthy
 
     frontend:
-            # build:
-            #     context: ../game-forge-frontend
-            #     dockerfile: Dockerfile
-            # image: game-forge-frontend:latest
-            image: ghcr.io/game-forge-studio/game-forge-frontend:latest
-            ports:
-                - '3000:3000'
-            env_file:
-                - ../game-forge-frontend/.env
-            container_name: game-forge-frontend
-            depends_on:
-                - backend
+        # build:
+        #     context: ../game-forge-frontend
+        #     dockerfile: Dockerfile
+        # image: game-forge-frontend:latest
+        image: ghcr.io/game-forge-studio/game-forge-frontend:latest
+        ports:
+            - '3000:3000'
+        env_file:
+            - ../game-forge-frontend/.env
+        container_name: game-forge-frontend
+        depends_on:
+            - backend
 
     server:
         # build:
@@ -44,7 +46,7 @@ services:
         # image: game-forge-server:latest
         image: ghcr.io/game-forge-studio/game-forge-server:latest
         ports:
-            - '6000:6000'
+            - '6100:6100'
         container_name: game-forge-server
         env_file:
             - ../game-forge-server/.env
@@ -54,22 +56,14 @@ services:
             - MINIO_PORT=9000
             - MINIO_USE_SSL=false
             - MINIO_BUCKET=game-forge-games
-            - PORT=6000
-            - SUMMARIZER_PROVIDER=groq
-            - SUMMARIZER_MODEL=qwen/qwen3-32b
-            - PLANNER_PROVIDER=groq
-            - PLANNER_MODEL=qwen/qwen3-32b
-            - CODER_PROVIDER=groq
-            - CODER_MODEL=openai/gpt-oss-120b
-            - THEME_PROVIDER=stub
-            - AUDIO_PROVIDER=stub
+            - PORT=6100
         depends_on:
             mongo:
                 condition: service_started
             minio:
                 condition: service_healthy
         healthcheck:
-            test: ["CMD", "curl", "-f", "http://localhost:6000/health"]
+            test: ["CMD", "curl", "-f", "http://localhost:6100/health"]
             interval: 10s
             timeout: 5s
             retries: 3
@@ -89,8 +83,9 @@ services:
         ports:
             - '9000:9000'
             - '9001:9001'
-        env_file:
-            - ../game-forge-backend/.env
+        environment:
+            - MINIO_ROOT_USER=gameforge
+            - MINIO_ROOT_PASSWORD=gameforge_secret_123
         volumes:
             - minio-data:/data
         healthcheck:
