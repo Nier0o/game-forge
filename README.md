@@ -14,16 +14,13 @@ A web platform that generates browser-playable games from natural language promp
 This monorepo contains three separate Git repositories and the Docker Compose orchestration:
 
 ```
-game-forge/               ← you are here (orchestration + MCP server)
+game-forge/               ← you are here (orchestration)
 ├── docker-compose.yml    ← full-stack Docker Compose
-├── mcp-server/           ← Model Context Protocol server (game generation pipeline)
-│   ├── server.js
-│   ├── adapters/         ← planner, asset, code, build adapters
-│   └── tools/            ← MCP tool definitions
 └── docs/
 
 game-forge-backend/       ← Node.js/Express REST API
 game-forge-frontend/      ← React/Vite web UI
+game-forge-server/        ← AI generation pipeline + Godot export
 ```
 
 ## Services
@@ -92,4 +89,4 @@ docker compose up
 The platform scaffolding is complete:
 - User auth, project management, and chat are fully working
 - Docker orchestration, Godot export pipeline infrastructure, and MinIO storage are in place
-- The MCP server adapters (planner, asset generation, code generation) are stubs — this is the active area of development
+- The generation pipeline (game-forge-server) handles AI planning, asset generation, code generation, and Godot export
