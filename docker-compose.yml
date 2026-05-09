@@ -1,16 +1,202 @@
 services:
     backend:
-        image: ghcr.io/game-forge-studio/game-forge-backend:latest
+        build:
+            context: ../game-forge-backend
+            dockerfile: Dockerfile
+        image: game-forge-backend:latest
+        # image: ghcr.io/game-forge-studio/game-forge-backend:latest
         ports:
             - '5000:5000'
         env_file:
             - ../game-forge-backend/.env
         container_name: game-forge-backend
         environment:
-            - DATABASE_LOCAL=mongodb://mongo:27017/gameforge
+            - MONGODB_URL=mongodb://mongo:27017/gameforge
             - NODE_ENV=development
+            - MINIO_ENDPOINT=minio
+            - MINIO_PORT=9000
+            - MINIO_USE_SSL=false
+            - MINIO_BUCKET=game-forge-games
+            - GEN_SERVICE_URL=http://server:6100
+            - GEN_SERVICE_SECRET=${GEN_SERVICE_SECRET:-}
+            - CORS_ALLOWED_ORIGINS=http://localhost:3000,http://host.docker.internal:3000
         depends_on:
-            - mongo
+            mongo:
+                condition: service_started
+            minio:
+                condition: service_healthy
+
+    frontend:
+        build:
+            context: ../game-forge-frontend
+            dockerfile: Dockerfile
+        image: game-forge-frontend:latest
+        # image: ghcr.io/game-forge-studio/game-forge-frontend:latest
+        ports:
+            - '3000:3000'
+        env_file:
+            - ../game-forge-frontend/.env
+        container_name: game-forge-frontend
+        depends_on:
+            - backend
+
+    server:
+        build:
+            context: ../game-forge-server
+            dockerfile: Dockerfile
+        image: game-forge-server:latest
+        # image: ghcr.io/game-forge-studio/game-forge-server:latest
+        ports:
+            - '6100:6100'
+        container_name: game-forge-server
+        env_file:
+            - ../game-forge-server/.env
+        environment:
+            - PORT=6100
+            - GEN_SERVICE_SECRET=${GEN_SERVICE_SECRET:-}
+            - BACKEND_URL=http://backend:5000
+            - PLANNER_SERVICE_URL=http://planner:6101
+            - ASSET_SERVICE_URL=http://asset:6102
+            - CODE_SERVICE_URL=http://code:6103
+            - BUILDER_SERVICE_URL=http://builder:6104
+        depends_on:
+            backend:
+                condition: service_started
+            planner:
+                condition: service_started
+            asset:
+                condition: service_started
+            code:
+                condition: service_started
+            builder:
+                condition: service_started
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:6100/health"]
+            interval: 10s
+            timeout: 5s
+            retries: 3
+
+    planner:
+        build:
+            context: ../game-forge-planner
+            dockerfile: Dockerfile
+        image: game-forge-planner:latest
+        ports:
+            - '6101:6101'
+        container_name: game-forge-planner
+        environment:
+            - PORT=6101
+            - NODE_ENV=development
+            - MONGODB_URL=mongodb://mongo:27017/gameforge
+            - GEN_SERVICE_SECRET=${GEN_SERVICE_SECRET:-}
+            - PLANNER_PROVIDER=${PLANNER_PROVIDER:-groq}
+            - PLANNER_MODEL=${PLANNER_MODEL:-}
+            - GROQ_API_KEY=${GROQ_API_KEY:-}
+        depends_on:
+            mongo:
+                condition: service_started
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:6101/health"]
+            interval: 10s
+            timeout: 5s
+            retries: 3
+
+    asset:
+        build:
+            context: ../game-forge-asset
+            dockerfile: Dockerfile
+        image: game-forge-asset:latest
+        ports:
+            - '6102:6102'
+        container_name: game-forge-asset
+        environment:
+            - PORT=6102
+            - NODE_ENV=development
+            - MONGODB_URL=mongodb://mongo:27017/gameforge
+            - MINIO_ENDPOINT=minio
+            - MINIO_PORT=9000
+            - MINIO_USE_SSL=false
+            - MINIO_BUCKET=game-forge-games
+            - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-gameforge}
+            - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-change-me-in-production}
+            - GEN_SERVICE_SECRET=${GEN_SERVICE_SECRET:-}
+            - THEME_PROVIDER=${THEME_PROVIDER:-groq}
+            - THEME_MODEL=${THEME_MODEL:-}
+            - AUDIO_PROVIDER=${AUDIO_PROVIDER:-groq}
+            - AUDIO_MODEL=${AUDIO_MODEL:-}
+            - GROQ_API_KEY=${GROQ_API_KEY:-}
+        depends_on:
+            mongo:
+                condition: service_started
+            minio:
+                condition: service_healthy
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:6102/health"]
+            interval: 10s
+            timeout: 5s
+            retries: 3
+
+    code:
+        build:
+            context: ../game-forge-code
+            dockerfile: Dockerfile
+        image: game-forge-code:latest
+        ports:
+            - '6103:6103'
+        container_name: game-forge-code
+        environment:
+            - PORT=6103
+            - NODE_ENV=development
+            - MINIO_ENDPOINT=minio
+            - MINIO_PORT=9000
+            - MINIO_USE_SSL=false
+            - MINIO_BUCKET=game-forge-games
+            - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-gameforge}
+            - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-change-me-in-production}
+            - GEN_SERVICE_SECRET=${GEN_SERVICE_SECRET:-}
+            - CODER_PROVIDER=${CODER_PROVIDER:-groq}
+            - CODER_MODEL=${CODER_MODEL:-}
+            - GROQ_API_KEY=${GROQ_API_KEY:-}
+        depends_on:
+            minio:
+                condition: service_healthy
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:6103/health"]
+            interval: 10s
+            timeout: 5s
+            retries: 3
+
+    builder:
+        build:
+            context: ../game-forge-builder
+            dockerfile: Dockerfile
+        image: game-forge-builder:latest
+        ports:
+            - '6104:6104'
+        container_name: game-forge-builder
+        environment:
+            - PORT=6104
+            - NODE_ENV=development
+            - MINIO_ENDPOINT=minio
+            - MINIO_PORT=9000
+            - MINIO_USE_SSL=false
+            - MINIO_BUCKET=game-forge-games
+            - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-gameforge}
+            - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-change-me-in-production}
+            - GEN_SERVICE_SECRET=${GEN_SERVICE_SECRET:-}
+            - GODOT_PATH=/usr/local/bin/godot
+            - SKIP_GODOT_EXPORT=${SKIP_GODOT_EXPORT:-false}
+            - BACKEND_URL=http://backend:5000
+        depends_on:
+            minio:
+                condition: service_healthy
+            backend:
+                condition: service_started
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:6104/health"]
+            interval: 10s
+            timeout: 5s
+            retries: 3
 
     mongo:
         image: mongo:latest
@@ -18,40 +204,28 @@ services:
             - '27017:27017'
         container_name: game-forge-mongo
         volumes:
-            - mongo-prod-data:/data/db
+            - mongo-data:/data/db
 
-    frontend:
-        image: ghcr.io/game-forge-studio/game-forge-frontend:latest
+    minio:
+        image: minio/minio:latest
+        container_name: game-forge-minio
+        command: server /data --console-address ":9001"
         ports:
-            - '3000:3000'
-        env_file:
-            - ../game-forge-frontend/.env
-        container_name: game-forge-frontend
+            - '9000:9000'
+            - '9001:9001'
         environment:
-            - VITE_API_URL=http://backend:5000
-        depends_on:
-            - backend
-        extra_hosts:
-            - "backend:host-gateway"
-
-    # --- FUTURE SERVICES PLACEHOLDERS ---
-    # ai-engine:
-    #   image: gameforge-ai
-    #   build:
-    #     context: ../mcp-server # or ../ai
-    #     dockerfile: ../docker/ai/Dockerfile
-    #   ports:
-    #     - "8000:8000"
-    #   volumes:
-    #     - ../mcp-server:/app
-
-    # godot:
-    #   image: gameforge-godot
-    #   build:
-    #     context: ../godot
-    #     dockerfile: ../docker/godot/Dockerfile
-    #   volumes:
-    #     - ../godot:/app
+            - MINIO_ROOT_USER=gameforge
+            - MINIO_ROOT_PASSWORD=change-me-in-production
+        volumes:
+            - minio-data:/data
+        healthcheck:
+            test: ["CMD", "mc", "ready", "local"]
+            interval: 5s
+            timeout: 5s
+            retries: 5
 
 volumes:
-    mongo-prod-data:
+    mongo-data:
+    minio-data:
+
+# gameforge_secret_123

@@ -1,13 +1,22 @@
-node_modules/
-.env
-*.env
+# Local data (created by docker volumes if mounted to host)
+mongo-data/
+minio-data/
+
+# Logs
 *.log
+npm-debug.log*
+
+# OS
 .DS_Store
+Thumbs.db
 
-# GODOT specific
-.import/
-export_presets.cfg
-builds/
+# Editor
+.vscode/
+.idea/
 
-# Docker
-# docker-compose.dev.yml
+# Environment (secrets — never commit)
+.env
+
+# Tooling
+/.scannerwork
+/.claude
