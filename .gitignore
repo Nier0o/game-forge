@@ -1,3 +1,6 @@
+# Dependencies
+node_modules/
+
 # Local data (created by docker volumes if mounted to host)
 mongo-data/
 minio-data/
