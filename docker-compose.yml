@@ -1,10 +1,10 @@
 services:
     backend:
-        # build:
-        #     context: ../game-forge-backend
-        #     dockerfile: Dockerfile
-        # image: game-forge-backend:latest
-        image: ghcr.io/game-forge-studio/game-forge-backend:latest
+        build:
+            context: ../game-forge-backend
+            dockerfile: Dockerfile
+        image: game-forge-backend:latest
+        # image: ghcr.io/game-forge-studio/game-forge-backend:latest
         ports:
             - '5000:5000'
         env_file:
@@ -26,11 +26,11 @@ services:
                 condition: service_healthy
 
     frontend:
-        # build:
-        #     context: ../game-forge-frontend
-        #     dockerfile: Dockerfile
-        # image: game-forge-frontend:latest
-        image: ghcr.io/game-forge-studio/game-forge-frontend:latest
+        build:
+            context: ../game-forge-frontend
+            dockerfile: Dockerfile
+        image: game-forge-frontend:latest
+        # image: ghcr.io/game-forge-studio/game-forge-frontend:latest
         ports:
             - '3000:3000'
         env_file:
@@ -40,11 +40,11 @@ services:
             - backend
 
     server:
-        # build:
-        #     context: ../game-forge-server
-        #     dockerfile: Dockerfile
-        # image: game-forge-server:latest
-        image: ghcr.io/game-forge-studio/game-forge-server:latest
+        build:
+            context: ../game-forge-server
+            dockerfile: Dockerfile
+        image: game-forge-server:latest
+        # image: ghcr.io/game-forge-studio/game-forge-server:latest
         ports:
             - '6100:6100'
         container_name: game-forge-server
@@ -69,11 +69,11 @@ services:
             retries: 3
 
     planner:
-        # build:
-        #     context: ../game-forge-planner
-        #     dockerfile: Dockerfile
-        # image: game-forge-planner:latest
-        image: ghcr.io/game-forge-studio/game-forge-planner:latest
+        build:
+            context: ../game-forge-planner
+            dockerfile: Dockerfile
+        image: game-forge-planner:latest
+        # image: ghcr.io/game-forge-studio/game-forge-planner:latest
         ports:
             - '6101:6101'
         container_name: game-forge-planner
@@ -95,11 +95,11 @@ services:
             retries: 3
 
     asset:
-        # build:
-        #     context: ../game-forge-asset
-        #     dockerfile: Dockerfile
-        # image: game-forge-asset:latest
-        image: ghcr.io/game-forge-studio/game-forge-asset:latest
+        build:
+            context: ../game-forge-asset
+            dockerfile: Dockerfile
+        image: game-forge-asset:latest
+        # image: ghcr.io/game-forge-studio/game-forge-asset:latest
         ports:
             - '6102:6102'
         container_name: game-forge-asset
@@ -131,11 +131,11 @@ services:
             retries: 3
 
     code:
-        # build:
-        #     context: ../game-forge-code
-        #     dockerfile: Dockerfile
-        # image: game-forge-code:latest
-        image: ghcr.io/game-forge-studio/game-forge-code:latest
+        build:
+            context: ../game-forge-code
+            dockerfile: Dockerfile
+        image: game-forge-code:latest
+        # image: ghcr.io/game-forge-studio/game-forge-code:latest
         ports:
             - '6103:6103'
         container_name: game-forge-code
@@ -162,11 +162,11 @@ services:
             retries: 3
 
     builder:
-        # build:
-        #     context: ../game-forge-builder
-        #     dockerfile: Dockerfile
-        # image: game-forge-builder:latest
-        image: ghcr.io/game-forge-studio/game-forge-builder:latest
+        build:
+            context: ../game-forge-builder
+            dockerfile: Dockerfile
+        image: game-forge-builder:latest
+        # image: ghcr.io/game-forge-studio/game-forge-builder:latest
         ports:
             - '6104:6104'
         container_name: game-forge-builder
