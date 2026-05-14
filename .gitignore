@@ -9,6 +9,9 @@ minio-data/
 *.log
 npm-debug.log*
 
+# Python scratch output from benchmark scripts
+__pycache__/
+
 # OS
 .DS_Store
 Thumbs.db

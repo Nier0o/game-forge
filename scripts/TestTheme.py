@@ -9,7 +9,9 @@ from groq import Groq
 # CONFIG
 # =====================================================
 
-GROQ_API_KEY = "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"
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
+if not GROQ_API_KEY:
+    raise SystemExit("GROQ_API_KEY environment variable is required")
 
 THEME_MODELS = {
     "GPT-OSS-120B": "openai/gpt-oss-120b",

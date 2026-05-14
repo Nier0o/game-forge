@@ -6,11 +6,11 @@ import matplotlib.pyplot as plt
 import jsonschema
 from groq import Groq
 
-# =====================================================
-# GROQ CLIENT
-# =====================================================
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
+if not GROQ_API_KEY:
+    raise SystemExit("GROQ_API_KEY environment variable is required")
 
-client = Groq(api_key="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")
+client = Groq(api_key=GROQ_API_KEY)
 
 BASE_DIR = "planner"
 LOG_DIR = f"{BASE_DIR}/logs"
