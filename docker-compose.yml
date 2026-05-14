@@ -210,8 +210,8 @@ services:
             - '9000:9000'
             - '9001:9001'
         environment:
-            - MINIO_ROOT_USER=gameforge
-            - MINIO_ROOT_PASSWORD=change-me-in-production
+            - MINIO_ROOT_USER=${MINIO_ACCESS_KEY:-gameforge}
+            - MINIO_ROOT_PASSWORD=${MINIO_SECRET_KEY:-change-me-in-production}
         volumes:
             - minio-data:/data
         healthcheck:
