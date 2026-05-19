@@ -77,7 +77,10 @@ services:
         ports:
             - '6101:6101'
         container_name: game-forge-planner
+        volumes:
+            - ../game-forge-code/src/archetypes:/app/archetypes:ro
         environment:
+            - ARCHETYPES_DIR=/app/archetypes
             - PORT=6101
             - NODE_ENV=development
             - MONGODB_URL=mongodb://mongo:27017/gameforge
