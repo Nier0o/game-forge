@@ -19,6 +19,10 @@ services:
             - MINIO_BUCKET=game-forge-games
             - GEN_SERVICE_URL=http://server:6100
             - CORS_ALLOWED_ORIGINS=http://localhost:3000,http://host.docker.internal:3000
+            - GROQ_API_KEY=${GROQ_API_KEY:-}
+            - OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-}
+            - LLM_PROVIDER=${LLM_PROVIDER:-groq}
+            - LLM_MODEL=${LLM_MODEL:-llama-3.3-70b-versatile}
         depends_on:
             mongo:
                 condition: service_started
@@ -88,6 +92,7 @@ services:
             - PLANNER_PROVIDER=${PLANNER_PROVIDER:-groq}
             - PLANNER_MODEL=${PLANNER_MODEL:-}
             - GROQ_API_KEY=${GROQ_API_KEY:-}
+            - OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-}
         depends_on:
             mongo:
                 condition: service_started
@@ -145,6 +150,7 @@ services:
             - THEME_PROVIDER=${THEME_PROVIDER:-groq}
             - THEME_MODEL=${THEME_MODEL:-llama-3.3-70b-versatile}
             - GROQ_API_KEY=${GROQ_API_KEY:-}
+            - OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-}
             - MCP_SERVICE_URL=http://assets-mcp:8765/mcp
         depends_on:
             mongo:
@@ -181,6 +187,7 @@ services:
             - CODER_PROVIDER=${CODER_PROVIDER:-groq}
             - CODER_MODEL=${CODER_MODEL:-}
             - GROQ_API_KEY=${GROQ_API_KEY:-}
+            - OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-}
         depends_on:
             minio:
                 condition: service_healthy
