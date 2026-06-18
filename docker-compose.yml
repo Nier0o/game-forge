@@ -61,6 +61,7 @@ services:
             - MINIO_USE_SSL=false
             - MINIO_BUCKET=game-forge-games
             - PORT=6100
+            - USE_ASSET_SERVICE=true
         depends_on:
             mongo:
                 condition: service_started
