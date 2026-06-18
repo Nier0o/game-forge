@@ -97,6 +97,31 @@ services:
             timeout: 5s
             retries: 3
 
+    assets-mcp:
+        build:
+            context: ../assets-mcp
+            dockerfile: Dockerfile
+        image: assets-mcp:latest
+        # image: ghcr.io/game-forge-studio/assets-mcp:latest
+        ports:
+            - '8765:8765'
+        container_name: assets-mcp
+        environment:
+            - MCP_TRANSPORT=streamable-http
+            - MCP_SSE_HOST=0.0.0.0
+            - MCP_SSE_PORT=8765
+            - MINIO_ENDPOINT=minio
+            - MINIO_PORT=9000
+            - MINIO_USE_SSL=false
+            - MINIO_BUCKET=game-forge-games
+            - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-gameforge}
+            - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-change-me-in-production}
+            - STABILITY_API_KEY=${STABILITY_API_KEY:-}
+            - SPRITEFLOW_SESSION_TOKEN=${SPRITEFLOW_SESSION_TOKEN:-}
+        depends_on:
+            minio:
+                condition: service_healthy
+
     asset:
         build:
             context: ../game-forge-asset
@@ -118,15 +143,16 @@ services:
             - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-change-me-in-production}
             - GEN_SERVICE_SECRET=${GEN_SERVICE_SECRET:-}
             - THEME_PROVIDER=${THEME_PROVIDER:-groq}
-            - THEME_MODEL=${THEME_MODEL:-}
-            - AUDIO_PROVIDER=${AUDIO_PROVIDER:-groq}
-            - AUDIO_MODEL=${AUDIO_MODEL:-}
+            - THEME_MODEL=${THEME_MODEL:-llama-3.3-70b-versatile}
             - GROQ_API_KEY=${GROQ_API_KEY:-}
+            - MCP_SERVICE_URL=http://assets-mcp:8765/mcp
         depends_on:
             mongo:
                 condition: service_started
             minio:
                 condition: service_healthy
+            assets-mcp:
+                condition: service_started
         healthcheck:
             test: ['CMD', 'curl', '-f', 'http://localhost:6102/health']
             interval: 10s
