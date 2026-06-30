@@ -15,9 +15,6 @@ LOG_DIR = f"{BASE_DIR}/logs"
 os.makedirs(LOG_DIR, exist_ok=True)
 GROQ_JUDGE_MODEL = "meta-llama/llama-4-maverick-17b-128e-instruct"
 
-# =====================================================
-# CODER MODELS
-# =====================================================
 
 CODER_MODELS = {
     "GPT-OSS-120B": "openai/gpt-oss-120b",
@@ -28,9 +25,6 @@ CODER_MODELS = {
     "LLaMA-4": "meta-llama/llama-4-scout-17b-16e-instruct",
 }
 
-# =====================================================
-# NOISY HUMAN PROMPT
-# =====================================================
 
 NOISY_CODE_PROMPT = """
 ok so im kinda lost here but i need help
@@ -84,9 +78,6 @@ sorry if this is messy
 im bad at explaining
 """
 
-# =====================================================
-# STATIC SCORING
-# =====================================================
 
 
 def score_instruction(text):
@@ -107,9 +98,6 @@ def score_soundness(text):
     return int("def " in text) + int(len(text.splitlines()) > 15)
 
 
-# =====================================================
-# GROQ CODE GENERATION
-# =====================================================
 
 
 def run_coder_model(model_id):
@@ -155,9 +143,6 @@ for name, model_id in CODER_MODELS.items():
 
 df = pd.DataFrame(rows)
 
-# =====================================================
-# GROQ JUDGE (NUMERIC SCORING 1–6)
-# =====================================================
 
 JUDGE_PROMPT = """
 You are an expert Python game developer acting as a STRICT AUTOMATED EVALUATOR.
@@ -239,9 +224,6 @@ with open(f"{BASE_DIR}/judge_output.txt", "w", encoding="utf-8") as f:
 judge_scores = extract_judge_scores(judge_raw, list(CODER_MODELS.keys()))
 df["Judge_Score"] = df["Model"].map(judge_scores)
 
-# =====================================================
-# NORMALIZATION
-# =====================================================
 
 df["Instruction_Norm"] = df["Instruction"] / 2
 df["Structure_Norm"] = df["Structure"] / 4
@@ -254,9 +236,6 @@ df["Latency_Norm"] = (df["Latency"].max() - df["Latency"]) / (
 
 df["Judge_Norm"] = (df["Judge_Score"] - 1) / 5
 
-# =====================================================
-# FINAL SCORE (JUDGE DOMINANT)
-# =====================================================
 
 df["Final_Score"] = (
     0.40 * df["Judge_Norm"]
@@ -270,9 +249,6 @@ df["Final_Score"] = (
 df["Final_Score_Percent"] = df["Final_Score"] * 100
 df.sort_values("Final_Score_Percent", ascending=False, inplace=True)
 
-# =====================================================
-# SAVE RESULTS
-# =====================================================
 
 df.to_csv(f"{BASE_DIR}/coder_results_final.csv", index=False)
 df.to_json(f"{BASE_DIR}/coder_results_final.json", orient="records", indent=2)
@@ -280,9 +256,6 @@ df.to_json(f"{BASE_DIR}/coder_results_final.json", orient="records", indent=2)
 with open(f"{BASE_DIR}/coder_results_final.txt", "w", encoding="utf-8") as f:
     f.write(df.to_string(index=False))
 
-# =====================================================
-# GRAPH
-# =====================================================
 
 plt.style.use("dark_background")
 fig, ax = plt.subplots(figsize=(12, 7))

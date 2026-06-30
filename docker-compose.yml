@@ -4,7 +4,6 @@ services:
             context: ../game-forge-backend
             dockerfile: Dockerfile
         image: game-forge-backend:latest
-        # image: ghcr.io/game-forge-studio/game-forge-backend:latest
         ports:
             - '5000:5000'
         env_file:
@@ -34,7 +33,6 @@ services:
             context: ../game-forge-frontend
             dockerfile: Dockerfile
         image: game-forge-frontend:latest
-        # image: ghcr.io/game-forge-studio/game-forge-frontend:latest
         ports:
             - '3000:3000'
         env_file:
@@ -48,7 +46,6 @@ services:
             context: ../game-forge-server
             dockerfile: Dockerfile
         image: game-forge-server:latest
-        # image: ghcr.io/game-forge-studio/game-forge-server:latest
         ports:
             - '6100:6100'
         container_name: game-forge-server
@@ -78,7 +75,6 @@ services:
             context: ../game-forge-planner
             dockerfile: Dockerfile
         image: game-forge-planner:latest
-        # image: ghcr.io/game-forge-studio/game-forge-planner:latest
         ports:
             - '6101:6101'
         container_name: game-forge-planner
@@ -110,7 +106,6 @@ services:
             context: ../assets-mcp
             dockerfile: Dockerfile
         image: assets-mcp:latest
-        # image: ghcr.io/game-forge-studio/assets-mcp:latest
         ports:
             - '8765:8765'
         container_name: assets-mcp
@@ -125,7 +120,6 @@ services:
             - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-gameforge}
             - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-change-me-in-production}
             - STABILITY_API_KEY=${STABILITY_API_KEY:-}
-            - SPRITEFLOW_SESSION_TOKEN=${SPRITEFLOW_SESSION_TOKEN:-}
         depends_on:
             minio:
                 condition: service_healthy
@@ -135,7 +129,6 @@ services:
             context: ../game-forge-asset
             dockerfile: Dockerfile
         image: game-forge-asset:latest
-        # image: ghcr.io/game-forge-studio/game-forge-asset:latest
         ports:
             - '6102:6102'
         container_name: game-forge-asset
@@ -173,7 +166,6 @@ services:
             context: ../game-forge-code
             dockerfile: Dockerfile
         image: game-forge-code:latest
-        # image: ghcr.io/game-forge-studio/game-forge-code:latest
         ports:
             - '6103:6103'
         container_name: game-forge-code
@@ -187,8 +179,6 @@ services:
             - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY:-gameforge}
             - MINIO_SECRET_KEY=${MINIO_SECRET_KEY:-change-me-in-production}
             - GEN_SERVICE_SECRET=${GEN_SERVICE_SECRET:-}
-            - CODER_PROVIDER=${CODER_PROVIDER:-groq}
-            - CODER_MODEL=${CODER_MODEL:-}
             - GROQ_API_KEY=${GROQ_API_KEY:-}
             - OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-}
             - OPENROUTER_NO_REASONING=${OPENROUTER_NO_REASONING:-true}
@@ -207,7 +197,6 @@ services:
             context: ../game-forge-builder
             dockerfile: Dockerfile
         image: game-forge-builder:latest
-        # image: ghcr.io/game-forge-studio/game-forge-builder:latest
         ports:
             - '6104:6104'
         container_name: game-forge-builder

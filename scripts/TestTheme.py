@@ -5,9 +5,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from groq import Groq
 
-# =====================================================
-# CONFIG
-# =====================================================
 
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
 if not GROQ_API_KEY:
@@ -30,9 +27,6 @@ os.makedirs(LOG_DIR, exist_ok=True)
 
 client = Groq(api_key=GROQ_API_KEY)
 
-# =====================================================
-# NOISY THEME PROMPT
-# =====================================================
 
 NOISY_THEME_PROMPT = """
 ok so im bad at art but i need the game to FEEL right
@@ -79,9 +73,6 @@ sorry if this sounds weird
 im not a designer
 """
 
-# =====================================================
-# THEME GENERATION
-# =====================================================
 
 def run_theme_model(model_id):
     start = time.time()
@@ -116,9 +107,6 @@ for name, model_id in THEME_MODELS.items():
 
 df = pd.DataFrame(rows)
 
-# =====================================================
-# GROQ JUDGE (THEME SCORING)
-# =====================================================
 
 JUDGE_PROMPT = """
 You are a professional game art director acting as a STRICT AUTOMATED EVALUATOR.
@@ -192,9 +180,6 @@ with open(f"{BASE_DIR}/judge_output.txt", "w", encoding="utf-8") as f:
 judge_scores = extract_judge_scores(judge_raw, list(THEME_MODELS.keys()))
 df["Judge_Score"] = df["Model"].map(judge_scores)
 
-# =====================================================
-# NORMALIZATION & FINAL SCORE
-# =====================================================
 
 df["Latency_Norm"] = (df["Latency"].max() - df["Latency"]) / (
     df["Latency"].max() - df["Latency"].min()
@@ -210,9 +195,6 @@ df["Final_Score"] = (
 df["Final_Score_Percent"] = df["Final_Score"] * 100
 df.sort_values("Final_Score_Percent", ascending=False, inplace=True)
 
-# =====================================================
-# SAVE RESULTS
-# =====================================================
 
 df.to_csv(f"{BASE_DIR}/theme_results_final.csv", index=False)
 df.to_json(f"{BASE_DIR}/theme_results_final.json", orient="records", indent=2)
@@ -220,9 +202,6 @@ df.to_json(f"{BASE_DIR}/theme_results_final.json", orient="records", indent=2)
 with open(f"{BASE_DIR}/theme_results_final.txt", "w", encoding="utf-8") as f:
     f.write(df.to_string(index=False))
 
-# =====================================================
-# GRAPH
-# =====================================================
 
 plt.style.use("dark_background")
 fig, ax = plt.subplots(figsize=(12, 7))

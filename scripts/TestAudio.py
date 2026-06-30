@@ -14,9 +14,6 @@ BASE_DIR = "audio"
 LOG_DIR = f"{BASE_DIR}/logs"
 os.makedirs(LOG_DIR, exist_ok=True)
 
-# =====================================================
-# AUDIO MODELS
-# =====================================================
 
 AUDIO_MODELS = {
     "GPT-OSS-120B": "openai/gpt-oss-120b",
@@ -27,9 +24,6 @@ AUDIO_MODELS = {
     "LLaMA-4": "meta-llama/llama-4-scout-17b-16e-instruct",
 }
 
-# =====================================================
-# AUDIO PROMPT
-# =====================================================
 
 NOISY_AUDIO_PROMPT = """
 ok i really dont know how to explain sound so pls dont expect technical stuff
@@ -82,9 +76,6 @@ just give me something i can feed into an audio generator
 sorry if this doesnt make sense
 """
 
-# =====================================================
-# AUDIO SCORING FUNCTIONS
-# =====================================================
 
 def score_instruction_following(text):
     score = 0
@@ -127,9 +118,6 @@ def score_generation_quality(text):
     return score
 
 
-# =====================================================
-# MODEL EXECUTION
-# =====================================================
 
 def run_model(model_id):
     start = time.time()
@@ -174,9 +162,6 @@ def benchmark_model(model_id):
     return latency, instruction_score, coverage_score, quality_score, raw_score
 
 
-# =====================================================
-# RUN BENCHMARK
-# =====================================================
 
 rows = []
 
@@ -195,9 +180,6 @@ for name, model_id in AUDIO_MODELS.items():
 
 df = pd.DataFrame(rows)
 
-# =====================================================
-# NORMALIZATION
-# =====================================================
 
 df["Instruction_Norm"] = df["Instruction"] / 2
 df["Coverage_Norm"] = df["Coverage"] / 4
@@ -217,9 +199,6 @@ df["Final_Score_Norm"] = (
 df["Final_Score_Percent"] = df["Final_Score_Norm"] * 100
 df.sort_values("Final_Score_Percent", ascending=False, inplace=True)
 
-# =====================================================
-# SAVE RESULTS
-# =====================================================
 
 df.to_csv(f"{BASE_DIR}/audio_results.csv", index=False)
 df.to_json(f"{BASE_DIR}/audio_results.json", orient="records", indent=2)
@@ -227,9 +206,6 @@ df.to_json(f"{BASE_DIR}/audio_results.json", orient="records", indent=2)
 with open(f"{BASE_DIR}/audio_results.txt", "w", encoding="utf-8") as f:
     f.write(df.to_string(index=False))
 
-# =====================================================
-# GRAPH (PERCENTAGE)
-# =====================================================
 
 plt.style.use("dark_background")
 fig, ax = plt.subplots(figsize=(12, 7))

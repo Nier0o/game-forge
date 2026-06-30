@@ -2,7 +2,6 @@
   "name": "game-forge",
   "version": "1.0.0",
   "description": "A web platform that generates browser-playable games from natural language prompts. Describe a game, refine the design through an AI chat, and get back a real Godot 4 HTML5 export you can play in the browser or download.",
-  "main": "index.js",
   "directories": {
     "doc": "docs"
   },
