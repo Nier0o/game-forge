@@ -1,0 +1,16 @@
+prompt_id,prompt_name,run,latency_s,success,valid_archetype,correct_archetype,has_title,one_player,min_entities,all_described,valid_win_cond,valid_theme,valid_style,has_audio
+simple_platformer,Simple Platformer,1,56.037,True,1,1,1,1,1,1,1,1,1,1
+simple_platformer,Simple Platformer,2,49.06,True,1,1,1,1,1,1,1,1,1,1
+simple_platformer,Simple Platformer,3,7.062,True,1,1,1,1,1,1,1,1,1,1
+dungeon_topdown,Dungeon Crawler,1,44.32,True,1,0,1,1,1,1,1,1,1,1
+dungeon_topdown,Dungeon Crawler,2,25.21,True,1,1,1,1,1,1,1,1,1,1
+dungeon_topdown,Dungeon Crawler,3,32.203,True,1,0,1,1,1,1,1,1,1,1
+endless_runner,Endless Runner,1,100.294,True,1,0,1,1,1,1,1,1,1,1
+endless_runner,Endless Runner,2,23.933,True,1,0,1,1,1,1,1,1,1,1
+endless_runner,Endless Runner,3,25.155,True,1,0,1,1,1,1,1,1,1,1
+boss_fight,Boss Fight,1,67.144,True,1,1,1,1,1,1,1,1,1,1
+boss_fight,Boss Fight,2,57.943,True,1,1,1,1,1,1,1,1,1,1
+boss_fight,Boss Fight,3,52.404,True,1,1,1,1,1,1,1,1,1,1
+space_shooter,Space Shooter,1,51.877,True,1,1,1,1,1,1,1,1,1,1
+space_shooter,Space Shooter,2,105.071,True,1,1,1,1,1,1,1,1,1,1
+space_shooter,Space Shooter,3,31.724,True,1,1,1,1,1,1,1,1,1,1

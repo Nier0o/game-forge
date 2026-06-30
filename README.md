@@ -24,7 +24,7 @@ This folder is the **orchestration root** — Docker Compose bringing together 9
    ┌────▼────┐  ┌─────▼─────┐  ┌─────▼────┐  ┌─────▼─────┐
    │ planner │  │   asset   │  │   code   │  │  builder  │
    │  :6101  │  │   :6102   │  │  :6103   │  │   :6104   │
-   │  Groq   │  │ Groq +    │  │  pure    │  │  Godot +  │
+   │  LLM    │  │  LLM +    │  │  pure    │  │  Godot +  │
    │GamePlan │  │ MCP tools │  │ assembly │  │  MinIO ↘  │
    │         │  │ + MinIO ↗ │  │ + MinIO ↗│  │ (export)  │
    └────┬────┘  └─────┬─────┘  └──────────┘  └─────┬─────┘
@@ -69,7 +69,7 @@ cp game-forge-backend/.env.example game-forge-backend/.env
 cp game-forge-frontend/.env.example game-forge-frontend/.env
 cp game-forge-server/.env.example  game-forge-server/.env
 
-# 2. Edit game-forge/.env to set GROQ_API_KEY and STABILITY_API_KEY
+# 2. Edit game-forge/.env to set OPENROUTER_API_KEY and STABILITY_API_KEY
 
 # 3. Bring up the stack
 cd game-forge
@@ -91,10 +91,10 @@ docker compose up -d --build
 | Var                                | Default                             | Purpose                                                                                    |
 | ---------------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------ |
 | `GEN_SERVICE_SECRET`               | empty                               | Inter-service auth header. Empty disables auth (dev-friendly).                             |
-| `GROQ_API_KEY`                     | empty                               | Required for planner + asset prompt-composition + backend chat.                            |
+| `OPENROUTER_API_KEY`               | empty                               | Required for planner + asset prompt-composition + backend chat.                            |
 | `STABILITY_API_KEY`                | empty                               | Required for all image and music generation (assets-mcp).                                  |
-| `PLANNER_PROVIDER` / `_MODEL`      | groq / qwen/qwen3-32b               | LLM for game design (groq or openrouter)                                                   |
-| `THEME_PROVIDER` / `_MODEL`        | groq / qwen/qwen3-32b               | LLM for sprite/background/music prompt composition                                         |
+| `PLANNER_PROVIDER` / `_MODEL`      | openrouter / qwen/qwen3-32b         | LLM for game design (openrouter or groq)                                                   |
+| `THEME_PROVIDER` / `_MODEL`        | openrouter / qwen/qwen3-32b         | LLM for sprite/background/music prompt composition                                         |
 | `SKIP_GODOT_EXPORT`                | false                               | If `true`, builder writes stub artifacts (skips Godot — fast for orchestration testing)    |
 | `MINIO_ACCESS_KEY` / `_SECRET_KEY` | gameforge / change-me-in-production | Must match `MINIO_ROOT_USER` / `MINIO_ROOT_PASSWORD` set on the minio container in compose |
 
@@ -152,5 +152,5 @@ GradProject/
 - **`Error response from daemon: Conflict. The container name "/game-forge-mongo" is already in use`** — leftover container from a previous run. Run `docker compose down` first.
 - **Builder fails with `wget exit code 5`** — SSL verification failure during Godot download; means `ca-certificates` is missing from the Dockerfile (already added).
 - **Service exits with `MongoServerError`** — mongo isn't reachable; check `docker compose ps` for mongo's state and ensure `MONGODB_URL` points to `mongo:27017` from inside the network.
-- **Plan generation hangs / 401** — `GROQ_API_KEY` missing or invalid in `game-forge/.env`. Check with `docker compose exec planner env | grep GROQ`.
+- **Plan generation hangs / 401** — `OPENROUTER_API_KEY` missing or invalid in `game-forge/.env`. Check with `docker compose exec planner env | grep OPENROUTER`.
 - **Assets are placeholder/grey** — `STABILITY_API_KEY` missing or quota exhausted in `game-forge/.env`.
