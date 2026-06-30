@@ -213,6 +213,14 @@ The testing foundation has been implemented and executed. All unit, integration,
 
 ### Unit and Integration Results
 
+Current validation update (2026-06-30): after closing missing plan items, the current passing counts are backend unit 67/12 files, backend integration 12/1, server unit 44/4, server integration 10/1, planner unit 34/5, planner integration 7/1, asset unit 38/6, asset integration 8/1, code unit 122/11, code integration 9/1, builder unit 33/6, builder integration 8/1, frontend unit/component 65/10, frontend build passing, and assets-mcp 60 pytest tests passing.
+
+Current coverage improved over the first implementation pass: backend 54.19 / 40.85 / 44.64 / 57.85, asset 56.65 / 40.92 / 58.46 / 59.09, code 37.29 / 40.02 / 36.68 / 39.33, and builder 64.28 / 44.30 / 64.28 / 67.90 for statements / branches / functions / lines. Server, planner, frontend, and assets-mcp remain at the baseline values listed below.
+
+For rows whose counts changed after the validation pass, the current validation update above supersedes the original implementation-pass counts in the detailed table below.
+
+The prior asset `extractJson` deviation is resolved by `game-forge-asset/src/utils/extractJson.js` and `game-forge-asset/test/unit/utils/extractJson.test.js`. `game-forge-code` now has direct assembler and service orchestration coverage through `test/unit/pipeline/assembler.test.js` and `test/unit/services/codeService.test.js`.
+
 | Area | Test Type | Command | Result | Coverage / Notes |
 | ---- | --------- | ------- | ------ | ---------------- |
 | `game-forge-backend` | Unit | `npm run test:unit` | Pass — 66 tests, 11 files | Middleware (`validateBody`, `requireServiceAuth`), utils (`AppError`, `catchAsync`), models (`GenerationJob`, `Build`, `User`), controllers (auth/chat/game/internal) with mocked models and services. |
@@ -235,27 +243,26 @@ The testing foundation has been implemented and executed. All unit, integration,
 
 | Area | Command | Artifact | Coverage (Stmts / Branch / Funcs / Lines) |
 | ---- | ------- | -------- | ----------------------------------------- |
-| `game-forge-backend` | `npm run test:coverage` | `coverage/lcov.info` | 54.07 / 40.85 / 43.75 / 57.72 |
+| `game-forge-backend` | `npm run test:coverage` | `coverage/lcov.info` | 54.19 / 40.85 / 44.64 / 57.85 |
 | `game-forge-server` | `npm run test:coverage` | `coverage/lcov.info` | 76.35 / 63.63 / 85.29 / 78.19 |
 | `game-forge-planner` | `npm run test:coverage` | `coverage/lcov.info` | 37.56 / 27.33 / 29.03 / 40.35 |
-| `game-forge-asset` | `npm run test:coverage` | `coverage/lcov.info` | 53.71 / 37.20 / 56.45 / 56.48 |
-| `game-forge-code` | `npm run test:coverage` | `coverage/lcov.info` | 21.11 / 20.48 / 22.11 / 22.51 |
-| `game-forge-builder` | `npm run test:coverage` | `coverage/lcov.info` | 58.79 / 37.97 / 57.14 / 62.34 |
+| `game-forge-asset` | `npm run test:coverage` | `coverage/lcov.info` | 56.65 / 40.92 / 58.46 / 59.09 |
+| `game-forge-code` | `npm run test:coverage` | `coverage/lcov.info` | 37.29 / 40.02 / 36.68 / 39.33 |
+| `game-forge-builder` | `npm run test:coverage` | `coverage/lcov.info` | 64.28 / 44.30 / 64.28 / 67.90 |
 | `game-forge-frontend` | `npm run test:coverage` | `coverage/lcov.info` | 32.00 / 29.04 / 29.47 / 33.49 |
 | `assets-mcp` | `python -m pytest --cov=app --cov-report=term-missing --cov-report=xml` | `coverage.xml` | 86% lines (TOTAL) |
 
 These percentages are a baseline, not enforced thresholds (see §6.1, Coverage Expectations). They are diluted by modules that are deliberately mocked or out of scope for this first pass — for example `config/env.js`, provider classes, real Mongoose models, MinIO storage clients, and (for `game-forge-code`) the large `assembler.js`/`codeService.js` assembly path that depends on Godot. The targeted surfaces — pure utilities, validators, middleware, controllers, route handlers, and the orchestrator pipeline — are well covered.
 
+Current validation added direct `assembler.js` and `codeService.js` coverage; the remaining `game-forge-code` dilution is mostly from large archetype level generators, `gdotRunner.js`, storage adapters, and config modules.
+
 ### Lint and Build
 
-`npm run lint` passes for `game-forge-backend`, `game-forge-server`, `game-forge-planner`, `game-forge-asset`, `game-forge-builder`, and `game-forge-frontend`, and the frontend `npm run build` succeeds. The newly added test files lint clean (ESLint configs were extended to allow Vitest globals in test files only).
-
-`game-forge-code` `npm run lint` does **not** pass: it reports 12 `no-useless-escape` errors in `src/pipeline/assembler.js` and 1 `no-unused-vars` warning in `src/pipeline/behaviorComposer.js`. These are pre-existing in the initial commit, are unrelated to the test foundation, and were left untouched to avoid unrequested production-source changes.
+`npm run lint` passes for `game-forge-backend`, `game-forge-server`, `game-forge-planner`, `game-forge-asset`, `game-forge-code`, `game-forge-builder`, `game-forge-frontend`, and the orchestration root `game-forge`. `game-forge-server` currently emits one non-fatal `no-unused-vars` warning in a test file while still exiting successfully. The frontend `npm run build` succeeds. The newly added test files lint clean (ESLint configs were extended to allow Vitest globals in test files only).
 
 ### Deviations from the Plan (actual codebase vs. plan assumptions)
 
-- `game-forge-asset` has no `src/utils/extractJson.js`; JSON spec parsing is a private inline `parseSpec()` inside `assetService.js`. The planned `asset/test/unit/utils/extractJson.test.js` was therefore not created; spec handling is exercised through the mocked `assetService` happy/fallback paths instead.
-- `game-forge-code` has no `src/utils/extractJson.js` or `src/utils/retry.js` (retry logic is internal to `codeService.assembleWithRetry`). The planned `code/test/unit/utils/extractJson.test.js` and `retry.test.js` were not created; coverage focuses on the deterministic pipeline utilities.
+- `game-forge-code` has no `src/utils/extractJson.js` or `src/utils/retry.js` (retry logic is internal to `codeService.assembleWithRetry`). The planned `code/test/unit/utils/extractJson.test.js` and `retry.test.js` were not created; the internal retry path is covered through `test/unit/services/codeService.test.js`.
 - `game-forge-code/.gitignore` previously ignored the entire `test/` directory; it was narrowed (keeping `test-output/` and `successful-runs/`) so the new suite is tracked. Coverage artifacts were also added to the frontend and `assets-mcp` ignore files.
 
 ### Not Executed in This Pass
