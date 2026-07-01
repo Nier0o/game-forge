@@ -37,8 +37,8 @@ from config import (
 
 SKIP_PLANNER = os.getenv("SKIP_PLANNER", "0") == "1"
 SKIP_CODE    = os.getenv("SKIP_CODE",    "0") == "1"
-SKIP_ASSETS  = os.getenv("SKIP_ASSETS",  "0") == "1"
-SKIP_E2E     = os.getenv("SKIP_E2E",     "0") == "1"
+SKIP_ASSETS  = os.getenv("SKIP_ASSETS",  "1") == "1"  # default ON — uses Stability AI credits
+SKIP_E2E     = os.getenv("SKIP_E2E",     "1") == "1"  # default ON — uses Stability AI credits
 
 
 def check_health() -> bool:
