@@ -1,0 +1,131 @@
+{
+  "extractedAt": "2026-07-02",
+  "sources": {
+    "mongodb": { "container": "game-forge-mongo", "version": "8.2.11", "database": "gameforge" },
+    "minio": { "container": "game-forge-minio", "version": "RELEASE.2025-09-07T16-13-09Z", "bucket": "game-forge-games" }
+  },
+  "generationJobs": {
+    "total": 33,
+    "statusDistribution": { "completed": 13, "processing_orphaned": 13, "failed": 7 },
+    "stepDurationsSeconds": {
+      "planning": { "n": 29, "avg": 42.414, "p50": 32.970, "p90": 82.459, "p95": 85.343, "min": 10.540, "max": 158.647, "stdDev": 31.669 },
+      "assets":   { "n": 13, "avg": 218.359, "p50": 211.292, "p90": 324.197, "p95": 416.335, "min": 56.697, "max": 416.335, "stdDev": 83.441 },
+      "code":     { "n": 13, "avg": 0.0062, "p50": 0.006, "p90": 0.007, "p95": 0.007, "min": 0.006, "max": 0.007, "stdDev": 0.0004 },
+      "building": { "n": 13, "avg": 9.392, "p50": 9.564, "p90": 10.060, "p95": 10.443, "min": 7.538, "max": 10.443, "stdDev": 0.721 }
+    },
+    "stepStatusDistribution": {
+      "planning": { "completed": 29, "processing": 4 },
+      "assets": { "completed": 13, "processing": 9, "failed": 7, "pending": 4 },
+      "code": { "completed": 13, "pending": 20 },
+      "building": { "completed": 13, "pending": 20 }
+    },
+    "endToEndSeconds": {
+      "completed": { "n": 13, "avg": 276.533, "median": 268.199, "min": 109.714, "max": 453.083, "stdDev": 92.946 },
+      "failed": { "n": 7, "avg": 274.203, "min": 32.845, "max": 621.468, "stdDev": 175.159 }
+    },
+    "failureCauses": [
+      { "step": "assets", "message": "The operation was aborted due to timeout", "count": 3 },
+      { "step": "assets", "message": "fetch failed", "count": 2 },
+      { "step": "assets", "message": "http://asset:6102/assets -> 500: Expected ',' or '}' after property value in JSON", "count": 1 },
+      { "step": "assets", "message": "http://asset:6102/assets -> 500: Failed to parse <MANIFEST> from the final response", "count": 1 }
+    ],
+    "jobsPerDay": { "2026-06-20": 8, "2026-06-25": 14, "2026-06-29": 9, "2026-07-01": 2 }
+  },
+  "builds": {
+    "total": 33,
+    "statusDistribution": { "completed": 13, "queued": 13, "failed": 7 },
+    "exportTargets": { "web": 33 },
+    "godotVersion": "4.x",
+    "buildDurationMs_fullPipeline": { "n": 20, "avg": 275784.75, "min": 33392, "max": 621532, "stdDev": 127839.79 },
+    "artifactsByType": [
+      { "type": "wasm", "count": 13, "totalBytes": 459899817, "avgBytes": 35376909 },
+      { "type": "pck", "count": 13, "totalBytes": 414860144, "avgBytes": 31912319, "maxBytes": 44752032 },
+      { "type": "js", "count": 13, "totalBytes": 4309435, "avgBytes": 331495 },
+      { "type": "png", "count": 26, "totalBytes": 352573, "avgBytes": 13561 },
+      { "type": "html", "count": 13, "totalBytes": 63037, "avgBytes": 4849 }
+    ],
+    "bundlePerCompletedBuild": { "builds": 13, "avgBytes": 67652693, "minBytes": 35811588, "maxBytes": 80492403, "filesPerBuild": 6 }
+  },
+  "assets": {
+    "total": 154,
+    "statusDistribution": { "generated": 154 },
+    "byTypeAndEntity": [
+      { "assetType": "audio", "entityType": null, "count": 35 },
+      { "assetType": "sprite", "entityType": "enemy", "count": 29 },
+      { "assetType": "tileset", "entityType": "obstacle", "count": 27 },
+      { "assetType": "sprite", "entityType": "player", "count": 14 },
+      { "assetType": "background", "entityType": "environment", "count": 14 },
+      { "assetType": "sprite", "entityType": "collectible", "count": 13 },
+      { "assetType": "sprite", "entityType": "goal", "count": 13 },
+      { "assetType": "sprite", "entityType": "hazard", "count": 9 }
+    ],
+    "byMimeType": { "image/png": 119, "audio/mpeg": 18, "audio/wav": 17 }
+  },
+  "chats": { "total": 36, "totalMessages": 280, "avgMessagesPerChat": 7.78, "maxMessages": 12 },
+  "gameplans": { "total": 29, "docSizeBytes": { "avg": 4342, "min": 2684, "max": 7603 } },
+  "gameprojects": {
+    "total": 36,
+    "statusDistribution": { "completed": 13, "running_stale": 13, "failed": 7, "draft": 3 },
+    "users": 3, "avgProjectsPerUser": 12, "maxProjectsPerUser": 24
+  },
+  "mongodbServer": {
+    "dbStats": { "collections": 7, "objects": 324, "avgObjSizeBytes": 2460, "dataSizeBytes": 796980, "storageSizeBytes": 589824, "indexes": 22, "indexSizeBytes": 765952, "totalSizeBytes": 1355776 },
+    "collections": {
+      "assets": { "docs": 154, "dataBytes": 67682, "avgObjBytes": 439, "indexes": 6 },
+      "chats": { "docs": 36, "dataBytes": 287244, "avgObjBytes": 7979, "indexes": 2 },
+      "gameprojects": { "docs": 36, "dataBytes": 22535, "avgObjBytes": 625, "indexes": 4 },
+      "generationjobs": { "docs": 33, "dataBytes": 49347, "avgObjBytes": 1495, "indexes": 3 },
+      "builds": { "docs": 33, "dataBytes": 169242, "avgObjBytes": 5128, "indexes": 3 },
+      "gameplans": { "docs": 29, "dataBytes": 125930, "avgObjBytes": 4342, "indexes": 2 },
+      "users": { "docs": 3, "dataBytes": 75000, "avgObjBytes": 25000, "indexes": 2 }
+    },
+    "sessionSnapshot": {
+      "connections": { "current": 16, "active": 4, "rejected": 0 },
+      "residentMemoryMB": 214,
+      "avgReadLatencyMs": 1.156,
+      "avgCommandLatencyMs": 0.079
+    }
+  },
+  "minio": {
+    "server": { "drives": "1/1 online", "driveUsagePercent": 2.7, "driveTotalGiB": 956, "erasureCoding": "EC:0 (single node)" },
+    "bucket": "game-forge-games",
+    "totalObjects": 1874,
+    "totalSizeMB": 2250.7,
+    "gamePrefixes": 55,
+    "perGame": { "avgMB": 40.92, "medianMB": 34.22, "minMB": 0.01, "maxMB": 117.7, "avgObjects": 34.1, "maxObjects": 110 },
+    "byExtension": [
+      { "ext": ".wasm", "count": 27, "totalMB": 910.93, "avgKB": 34547.8 },
+      { "ext": ".png", "count": 458, "totalMB": 840.04, "avgKB": 1878.2 },
+      { "ext": ".pck", "count": 27, "totalMB": 452.07, "avgKB": 17145.3 },
+      { "ext": ".wav", "count": 110, "totalMB": 24.77, "avgKB": 230.5 },
+      { "ext": ".mp3", "count": 25, "totalMB": 11.47, "avgKB": 469.6 },
+      { "ext": ".js", "count": 27, "totalMB": 8.54, "avgKB": 323.7 },
+      { "ext": ".gd", "count": 831, "totalMB": 2.41, "avgKB": 3.0 },
+      { "ext": ".godot", "count": 52, "totalMB": 0.15, "avgKB": 3.0 },
+      { "ext": ".html", "count": 27, "totalMB": 0.12, "avgKB": 4.7 },
+      { "ext": ".import", "count": 156, "totalMB": 0.10, "avgKB": 0.7 },
+      { "ext": ".json", "count": 30, "totalMB": 0.05, "avgKB": 1.6 },
+      { "ext": ".cfg", "count": 52, "totalMB": 0.04, "avgKB": 0.7 },
+      { "ext": ".tscn", "count": 52, "totalMB": 0.02, "avgKB": 0.3 }
+    ],
+    "byArea": [
+      { "area": "build outputs (bucket root)", "objects": 142, "totalMB": 1372.1 },
+      { "area": "godot-project/assets", "objects": 518, "totalMB": 839.67 },
+      { "area": "godot-project/audio", "objects": 197, "totalMB": 36.26 },
+      { "area": "godot-project/scripts", "objects": 831, "totalMB": 2.41 },
+      { "area": "godot-project scaffolding", "objects": 186, "totalMB": 0.25 }
+    ]
+  },
+  "containerResources_idleSnapshot": [
+    { "container": "game-forge-mongo", "cpuPercent": 0.44, "memMiB": 209.9 },
+    { "container": "game-forge-minio", "cpuPercent": 0.03, "memMiB": 137.5 },
+    { "container": "game-forge-backend", "cpuPercent": 0.11, "memMiB": 63.7 },
+    { "container": "game-forge-frontend", "cpuPercent": 0.08, "memMiB": 100.5 },
+    { "container": "game-forge-planner", "cpuPercent": 0.31, "memMiB": 49.5 },
+    { "container": "game-forge-asset", "cpuPercent": 0.10, "memMiB": 78.3 },
+    { "container": "game-forge-code", "cpuPercent": 0.00, "memMiB": 50.0 },
+    { "container": "game-forge-builder", "cpuPercent": 0.00, "memMiB": 51.2 },
+    { "container": "game-forge-server", "cpuPercent": 0.00, "memMiB": 26.5 },
+    { "container": "assets-mcp", "cpuPercent": 0.13, "memMiB": 74.1 }
+  ]
+}
