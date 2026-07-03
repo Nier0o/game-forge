@@ -127,7 +127,7 @@ When the user clicks "Generate" in the frontend:
     - `planner-service` is called → LLM classifies archetype + fills plan → returns `{ plan }`
     - `asset-service` and `code-service` run in parallel
         - asset: LLM composes one prompt-spec JSON, then deterministically calls MCP tools (generate_sprite, generate_background, generate_music) → uploads to MinIO + writes Asset docs
-        - code: loads archetype library, validates plan behaviors/weapons/hooks, assembles GDScript project, runs `godot --check-only` loop → uploads scripts/scenes to MinIO
+        - code: loads archetype library, validates plan behaviors/weapons, assembles GDScript project, runs `godot --check-only` validation → uploads scripts/scenes to MinIO
     - `builder-service` is called → downloads assembled project + assets from MinIO, runs Godot CLI, uploads HTML5 export to MinIO, calls backend `/internal/builds/:id/complete`
 4. Server pushes status updates and logs to backend `/internal/jobs/:id/*` throughout
 5. Frontend polls `GET /api/games/status/:gameId` to track progress
